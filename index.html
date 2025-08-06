@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix Service Center - Профессиональный ремонт техники</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Основные стили */
+        .services-section {
+            background-color: #111827;
+            padding: 5rem 1rem;
+            color: white;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .divider {
+            width: 5rem;
+            height: 0.25rem;
+            background-color: #ef4444;
+            margin: 0 auto 1.5rem;
+        }
+
+        .section-header p {
+            color: #9ca3af;
+            max-width: 42rem;
+            margin: 0 auto;
+        }
+
+        /* Сетка услуг */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Карточки услуг */
+        .service-card {
+            background-color: #1f2937;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(239, 68, 68, 0.1), 0 10px 10px -5px rgba(239, 68, 68, 0.04);
+        }
+
+        .card-content {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .icon-circle {
+            width: 5rem;
+            height: 5rem;
+            background-color: #ef4444;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+
+        .icon-circle i {
+            font-size: 1.75rem;
+            color: white;
+        }
+
+        .service-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-list {
+            text-align: left;
+            margin-bottom: 1rem;
+            color: #9ca3af;
+        }
+
+        .service-list p {
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+
+        .service-list span {
+            color: #f87171;
+            font-weight: 500;
+        }
+
+        /* Кнопка "Все услуги" */
+        .toggle-services {
+            color: #ef4444;
+            font-weight: 500;
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            padding: 0;
+            margin-top: 0.5rem;
+        }
+
+        .toggle-services:hover {
+            color: #f87171;
+        }
+
+        .toggle-services i {
+            margin-left: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-services.active i {
+            transform: rotate(180deg);
+        }
+
+        /* Дополнительные услуги */
+        .more-services {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.5s ease, opacity 0.3s ease;
+            padding-top: 0;
+            margin-top: 0;
+        }
+
+        .more-services.active {
+            max-height: 1000px;
+            opacity: 1;
+            padding-top: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Блок важной информации */
+        .important-info {
+            background-color: #1f2937;
+            padding: 1.5rem;
+            border-left: 4px solid #ef4444;
+            border-radius: 0 0.5rem 0.5rem 0;
+            margin-top: 3rem;
+        }
+
+        .important-info h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .important-info ul {
+            list-style-type: none;
+            padding-left: 0;
+            color: #9ca3af;
+        }
+
+        .important-info li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .important-info li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #ef4444;
+        }
+        /* circuit background */
+        .bg-circuit {
+            background-image: url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .neon-text {
+            text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #ff2d75, 0 0 35px #ff2d75, 0 0 40px #ff2d75, 0 0 50px #ff2d75, 0 0 75px #ff2d75;
+            animation: neon 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes neon {
+            from {
+                text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #ff2d75, 0 0 35px #ff2d75, 0 0 40px #ff2d75, 0 0 50px #ff2d75, 0 0 75px #ff2d75;
+            }
+            to {
+                text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ff2d75, 0 0 70px #ff2d75, 0 0 80px #ff2d75, 0 0 100px #ff2d75, 0 0 150px #ff2d75;
+            }
+        }
+        .glow-btn {
+            box-shadow: 0 0 15px rgba(220, 38, 38, 0.7);
+        }
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(220, 38, 38, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(220, 38, 38, 0);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-900">
+    <!-- Header -->
+    <header class="fixed w-full z-50 bg-black bg-opacity-90 backdrop-filter backdrop-blur-sm">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="#" class="flex items-center">
+                    <span class="font-orbitron text-2xl md:text-3xl font-bold text-white neon-text">MATRIX</span>
+                    <span class="ml-2 text-xs md:text-sm font-light text-gray-300">Сервисный центр</span>
+                </a>
+            </div>
+            
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-6 mr-6">
+                <a href="index.html" class="nav-link text-white hover:text-red-500 transition">Главная</a>
+                <a href="yslygi.html" class="nav-link text-white hover:text-red-500 transition">Услуги</a>
+                <a href="onas.html" class="nav-link text-white hover:text-red-500 transition">О нас</a>
+                <a href="otsv.html" class="nav-link text-white hover:text-red-500 transition">Отзывы</a>
+                <a href="kontakt.html" class="nav-link text-white hover:text-red-500 transition">Контакты</a>
+            </nav>
+            
+            <div class="flex items-center">
+                <a href="zakaz.html" class="hidden md:block mr-4 px-6 py-2 bg-red-600 text-white rounded-full glow-btn hover:bg-red-700 transition">
+                    Заказать ремонт
+                </a>
+                <button class="hidden md:block callback-btn mr-4 px-6 py-2 bg-transparent border-2 border-red-600 text-red-600 rounded-full hover:bg-red-600 hover:text-white transition">
+                    Заказать звонок
+                </button>
+                <button class="md:hidden text-white focus:outline-none" id="mobile-menu-button">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden bg-black bg-opacity-95 w-full" id="mobile-menu">
+            <div class="px-4 py-3 space-y-3">
+                <a href="index.html" class="nav-link text-white hover:text-red-500 transition">Главная</a>
+                <a href="yslygi.html" class="nav-link text-white hover:text-red-500 transition">Услуги</a>
+                <a href="onas.html" class="nav-link text-white hover:text-red-500 transition">О нас</a>
+                <a href="otsv.html" class="nav-link text-white hover:text-red-500 transition">Отзывы</a>
+                <a href="kontakt.html" class="nav-link text-white hover:text-red-500 transition">Контакты</a>
+            </div>
+            <a href="#contact-form" class="block px-4 py-2 bg-red-600 text-white rounded-full text-center glow-btn hover:bg-red-700 transition">
+                Заказать ремонт
+            </a>
+            <button class="callback-btn w-full px-4 py-2 bg-transparent border-2 border-red-600 text-red-600 rounded-full text-center hover:bg-red-600 hover:text-white transition">
+                Заказать звонок
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative h-screen flex items-center justify-center bg-circuit overflow-hidden">
+        <div class="absolute inset-0 bg-black bg-opacity-60"></div>
+        <div class="absolute inset-0 flex items-center justify-center">
+            <div class="absolute w-full h-full opacity-20">
+                <div class="absolute top-0 left-0 w-20 h-20 rounded-full bg-red-500 filter blur-xl animate-pulse"></div>
+                <div class="absolute top-1/4 right-1/4 w-32 h-32 rounded-full bg-red-500 filter blur-xl animate-pulse animation-delay-1000"></div>
+                <div class="absolute bottom-1/3 left-1/3 w-24 h-24 rounded-full bg-red-500 filter blur-xl animate-pulse animation-delay-2000"></div>
+                <div class="absolute bottom-0 right-0 w-16 h-16 rounded-full bg-red-500 filter blur-xl animate-pulse animation-delay-3000"></div>
+            </div>
+        </div>
+
+        <div class="container mx-auto flex flex-wrap justify-center items-center gap-6 mb-10">
+            <!-- Левое окошко (Строителей) -->
+            <div class="bg-gray-800 bg-opacity-80 border border-gray-700 rounded-lg px-6 py-4 shadow-lg backdrop-blur-sm max-w-xs">
+                <div class="text-white">
+                    <div class="font-bold text-xl mb-2 text-gray-100">Смоленск</div>
+                    <div class="font-medium text-lg mb-1 text-white">пр. Строителей, 7Б</div>
+                    <div class="text-gray-300">Телефон: <span class="text-white">688-788</span></div>
+                    <div class="text-gray-300">Мобильный: <span class="text-white">+7(904)364-48-13</span></div>
+                </div>
+            </div>
+
+            <div class="container mx-auto px-4 z-10 text-center">
+                <h1 class="font-orbitron text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 neon-text">
+                    Профессиональный ремонт электронной техники
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-200 mb-10 max-w-3xl mx-auto">
+                    Ремонтируем телефоны, ноутбуки, планшеты и другую электронику быстро и качественно!
+                </p>
+                <a href="#contact-form" class="inline-block px-8 py-4 bg-red-600 text-white text-lg font-bold rounded-full glow-btn hover:bg-red-700 transition transform hover:scale-105 pulse-animation">
+                    Оставить заявку
+                </a>
+            </div>
+
+            <!-- Правое окошко (Юбилейная - выделено) -->
+            <div class="bg-gray-800 bg-opacity-80 border border-gray-700 rounded-lg px-6 py-4 shadow-lg backdrop-blur-sm max-w-xs">
+                <div class="text-white">
+                    <div class="font-bold text-xl mb-2 text-white">д.Новосельцы</div>
+                    <div class="font-medium text-lg mb-1 text-white">ул. Юбилейная, 16</div>
+                    <div class="text-gray-200">Телефон: <span class="text-white font-bold">67-44-67</span></div>
+                    <div class="text-gray-200">Мобильный: <span class="text-white font-bold">+7(900)219-02-70</span></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-10 left-0 right-0 flex justify-center">
+            <a href="#services" class="text-white animate-bounce">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                </svg>
+            </a>
+        </div>
+    </section>
+
+<!-- Services Section -->
+<section id="services" class="services-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Наши услуги</h2>
+            <div class="divider"></div>
+            <p>Мы предлагаем полный спектр услуг по ремонту электронных устройств любой сложности</p>
+        </div>
+        
+        <div class="services-grid">
+            <!-- Телефоны и планшеты -->
+            <div class="service-card">
+                <div class="card-content">
+                    <div class="icon-circle">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Ремонт телефонов и планшетов</h3>
+                    <div class="service-list">
+                        <p><span>Диагностика:</span> 300 руб. (все категории)</p>
+                        <p><span>Обновление ПО:</span> 1 кат. - 2000 руб., 2-3 кат. - 2500-4000 руб.</p>
+                        <p><span>Разблокировка Google-аккаунта:</span> 1 кат. - 1500 руб., 2 кат. - 2000 руб., 3 кат. - 2500 руб.</p>
+                        
+                        <div class="more-services">
+                            <p><span>Замена микрофона:</span> 1 кат. - 1000 руб., 2 кат. - 1500 руб., 3 кат. - от 2000 руб.</p>
+                            <p><span>Замена динамика:</span> 1 кат. - 1000 руб., 2 кат. - 1500 руб., 3 кат. - от 2000 руб.</p>
+                            <p><span>Замена дисплея:</span> 1 кат. - 1500 руб., 2 кат. - 2000 руб., 3 кат. - от 3000 руб.</p>
+                            <p><span>Замена тачскрина:</span> 1 кат. - 1000 руб., 2 кат. - 1200 руб., 3 кат. - от 2000 руб.</p>
+                            <p><span>Замена разъема питания:</span> 1 кат. - 1000 руб., 2 кат. - 1500 руб., 3 кат. - от 2000 руб.</p>
+                            <p><span>Ремонт материнской платы:</span> от 1500-2500 руб.</p>
+                        </div>
+                    </div>
+                    <button class="toggle-services">Все услуги <i class="fas fa-arrow-down"></i></button>
+                </div>
+            </div>
+            
+            <!-- Компьютеры -->
+            <div class="service-card">
+                <div class="card-content">
+                    <div class="icon-circle">
+                        <i class="fas fa-desktop"></i>
+                    </div>
+                    <h3>Ремонт компьютеров</h3>
+                    <div class="service-list">
+                        <p><span>Диагностика:</span> 500 руб.</p>
+                        <p><span>Замена материнской платы:</span> 1700 руб.</p>
+                        <p><span>Замена видеокарты:</span> 300 руб.</p>
+                        
+                        <div class="more-services">
+                            <p><span>Установка Windows:</span> 2000 руб.</p>
+                            <p><span>Установка/замена HDD:</span> 300 руб.</p>
+                            <p><span>Замена кулера CPU:</span> 500 руб.</p>
+                            <p><span>Профилактика:</span> 2000 руб.</p>
+                            <p><span>Восстановление данных:</span> от 1000-2500 руб.</p>
+                        </div>
+                    </div>
+                    <button class="toggle-services">Все услуги <i class="fas fa-arrow-down"></i></button>
+                </div>
+            </div>
+            
+            <!-- Ноутбуки -->
+            <div class="service-card">
+                <div class="card-content">
+                    <div class="icon-circle">
+                        <i class="fas fa-laptop"></i>
+                    </div>
+                    <h3>Ремонт ноутбуков</h3>
+                    <div class="service-list">
+                        <p><span>Диагностика:</span> 500 руб.</p>
+                        <p><span>Установка Windows:</span> 2000 руб.</p>
+                        <p><span>Замена HDD/привода:</span> от 300 руб.</p>
+                        
+                        <div class="more-services">
+                            <p><span>Профилактика:</span> 1700 руб.</p>
+                            <p><span>Ремонт видеочипа:</span> от 1500 руб.</p>
+                            <p><span>Замена матрицы:</span> от 1000-3500 руб.</p>
+                            <p><span>Ремонт материнской платы:</span> от 2500 руб.</p>
+                        </div>
+                    </div>
+                    <button class="toggle-services">Все услуги <i class="fas fa-arrow-down"></i></button>
+                </div>
+            </div>
+            
+            <!-- Бытовая техника -->
+            <div class="service-card">
+                <div class="card-content">
+                    <div class="icon-circle">
+                        <i class="fas fa-tv"></i>
+                    </div>
+                    <h3>Ремонт бытовой техники</h3>
+                    <div class="service-list">
+                        <p><span>Диагностика телевизора:</span> 500 руб.</p>
+                        <p><span>Диагностика СВЧ-печи:</span> 500 руб.</p>
+                        
+                        <div class="more-services">
+                            <p><span>Диагностика кофемашины:</span> 1000 руб.</p>
+                            <p><span>Ремонт монитора:</span> от 1500 руб.</p>
+                            <p><span>Чистка от тараканов:</span> от 3000 руб.</p>
+                        </div>
+                    </div>
+                    <button class="toggle-services">Все услуги <i class="fas fa-arrow-down"></i></button>
+                </div>
+            </div>
+            
+            <!-- Электротранспорт -->
+            <div class="service-card">
+                <div class="card-content">
+                    <div class="icon-circle">
+                        <i class="fas fa-bicycle"></i>
+                    </div>
+                    <h3>Ремонт электротранспорта</h3>
+                    <div class="service-list">
+                        <p><span>Диагностика электросамоката:</span> 1500 руб.</p>
+                        
+                        <div class="more-services">
+                            <p><span>Ремонт контроллеров:</span> от 2500 руб.</p>
+                            <p><span>Замена аккумуляторов:</span> от 2000 руб.</p>
+                        </div>
+                    </div>
+                    <button class="toggle-services">Все услуги <i class="fas fa-arrow-down"></i></button>
+                </div>
+            </div>
+            
+            <!-- Другие услуги -->
+            <div class="service-card">
+                <div class="card-content">
+                    <div class="icon-circle">
+                        <i class="fas fa-headphones"></i>
+                    </div>
+                    <h3>Другие услуги</h3>
+                    <div class="service-list">
+                        <p><span>Диагностика сабвуфера:</span> 500 руб.</p>
+                        
+                        <div class="more-services">
+                            <p><span>Пайка контактов:</span> от 300 руб.</p>
+                            <p><span>Заказ запчастей:</span> 10% от стоимости</p>
+                        </div>
+                    </div>
+                    <button class="toggle-services">Все услуги <i class="fas fa-arrow-down"></i></button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Важная информация -->
+        <div class="important-info">
+            <h3>❗ Важная информация:</h3>
+            <ul>
+                <li>Диагностика оплачивается в случае отказа от ремонта</li>
+                <li>Цены указаны без стоимости запчастей</li>
+                <li>Категории телефонов: 1 кат. (1000-3000 руб.), 2 кат. (3000-10000 руб.), 3 кат. (10000-25000 руб.)</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 mb-12 lg:mb-0 lg:pr-12">
+                    <h2 class="font-orbitron text-3xl md:text-4xl font-bold text-white mb-6">Почему выбирают Matrix Service Center?</h2>
+                    <div class="w-20 h-1 bg-red-600 mb-6"></div>
+                    <p class="text-gray-400 mb-8">
+                        Мы - команда профессионалов с более чем 10-летним опытом работы в сфере ремонта электроники. 
+                        Наш сервисный центр оснащен современным оборудованием, а мастера регулярно проходят обучение 
+                        у производителей техники.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex">
+                            <div class="flex-shrink-0 mr-4">
+                                <div class="flex items-center justify-center w-12 h-12 rounded-full bg-red-600 text-white">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-white mb-2">Оригинальные запчасти</h4>
+                                <p class="text-gray-400">
+                                    Используем только оригинальные комплектующие от производителей или качественные аналоги
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex">
+                            <div class="flex-shrink-0 mr-4">
+                                <div class="flex items-center justify-center w-12 h-12 rounded-full bg-red-600 text-white">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-white mb-2">Гарантия до 2 недель</h4>
+                                <p class="text-gray-400">
+                                    Предоставляем официальную гарантию на все виды работ и установленные комплектующие
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex">
+                            <div class="flex-shrink-0 mr-4">
+                                <div class="flex items-center justify-center w-12 h-12 rounded-full bg-red-600 text-white">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-white mb-2">Бесплатная диагностика</h4>
+                                <p class="text-gray-400">
+                                    Проводим полную диагностику вашего устройства бесплатно при последующем ремонте
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2 relative">
+                    <div class="bg-gray-700 p-6 rounded-lg shadow-xl">
+                        <div class="flex flex-wrap -mx-2 mb-6">
+                            <div class="w-1/2 px-2 mb-4">
+                                <div class="bg-gray-800 p-6 rounded-lg text-center h-full">
+                                    <div class="counter text-4xl font-bold mb-2" data-target="1000">0</div>
+                                    <div class="text-gray-400">Отремонтированных устройств</div>
+                                </div>
+                            </div>
+                            <div class="w-1/2 px-2 mb-4">
+                                <div class="bg-gray-800 p-6 rounded-lg text-center h-full">
+                                    <div class="counter text-4xl font-bold mb-2" data-target="98">0</div>
+                                    <div class="text-gray-400">Процентов довольных клиентов</div>
+                                </div>
+                            </div>
+                            <div class="w-1/2 px-2">
+                                <div class="bg-gray-800 p-6 rounded-lg text-center h-full">
+                                    <div class="counter text-4xl font-bold mb-2" data-target="50">0</div>
+                                    <div class="text-gray-400">Специалистов в команде</div>
+                                </div>
+                            </div>
+                            <div class="w-1/2 px-2">
+                                <div class="bg-gray-800 p-6 rounded-lg text-center h-full">
+                                    <div class="counter text-4xl font-bold mb-2" data-target="10">0</div>
+                                    <div class="text-gray-400">Лет на рынке</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-900 p-6 rounded-lg">
+                            <h4 class="text-xl font-bold text-white mb-4">Наши сертификаты</h4>
+                            <div class="flex flex-wrap -mx-2">
+                                <div class="w-1/3 px-2 mb-4">
+                                    <div class="bg-gray-800 h-24 flex items-center justify-center rounded-lg">
+                                        <i class="fas fa-certificate text-3xl text-red-500"></i>
+                                    </div>
+                                </div>
+                                <div class="w-1/3 px-2 mb-4">
+                                    <div class="bg-gray-800 h-24 flex items-center justify-center rounded-lg">
+                                        <i class="fas fa-award text-3xl text-red-500"></i>
+                                    </div>
+                                </div>
+                                <div class="w-1/3 px-2 mb-4">
+                                    <div class="bg-gray-800 h-24 flex items-center justify-center rounded-lg">
+                                        <i class="fas fa-medal text-3xl text-red-500"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="reviews" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="font-orbitron text-3xl md:text-4xl font-bold text-white mb-4">Отзывы клиентов</h2>
+                <div class="w-20 h-1 bg-red-600 mx-auto mb-6"></div>
+                <p class="text-gray-400 max-w-2xl mx-auto">
+                    Что говорят о нас наши клиенты
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Review 1 -->
+                <div class="bg-gray-800 rounded-lg p-8 transition-all duration-300 hover:transform hover:scale-105">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center text-white font-bold mr-4">А</div>
+                        <div>
+                            <h4 class="text-white font-bold">Александр</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 italic">
+                        "Отличный сервис! Починили мой ноутбук за один день, хотя в другом месте сказали, что ремонт займет неделю. Цены адекватные, персонал вежливый. Рекомендую!"
+                    </p>
+                </div>
+                
+                <!-- Review 2 -->
+                <div class="bg-gray-800 rounded-lg p-8 transition-all duration-300 hover:transform hover:scale-105">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center text-white font-bold mr-4">Е</div>
+                        <div>
+                            <h4 class="text-white font-bold">Екатерина</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 italic">
+                        "Разбила экран на новом телефоне. В Matrix заменили его за пару часов, причем по цене ниже, чем у официального сервиса. Очень довольна качеством работы!"
+                    </p>
+                </div>
+                
+                <!-- Review 3 -->
+                <div class="bg-gray-800 rounded-lg p-8 transition-all duration-300 hover:transform hover:scale-105">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center text-white font-bold mr-4">Д</div>
+                        <div>
+                            <h4 class="text-white font-bold">Дмитрий</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 italic">
+                        "Принес планшет после попадания воды. Специалисты не только починили его, но и восстановили все данные. Отдельное спасибо за честность - сказали, что можно обойтись без замены некоторых деталей."
+                    </p>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="otsv.html" class="inline-block px-6 py-3 border border-red-600 text-red-600 rounded-full hover:bg-red-600 hover:text-white transition">
+                    Все отзывы
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="contact-form" class="py-20 bg-red-600">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="font-orbitron text-3xl md:text-4xl font-bold text-white mb-6">Оставьте заявку прямо сейчас</h2>
+                <p class="text-white mb-10 text-xl">
+                    Заполните форму ниже, и наш менеджер свяжется с вами в течение 15 минут для уточнения деталей
+                </p>
+                        <form class="bg-white rounded-lg shadow-xl p-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="name" class="block text-gray-800 font-medium mb-2">Ваше имя</label>
+                        <input type="text" id="name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" placeholder="Иван Иванов">
+                    </div>
+                    <div>
+                        <label for="phone" class="block text-gray-800 font-medium mb-2">Ваш телефон</label>
+                        <input type="tel" id="phone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" placeholder="+7 (999) 123-45-67">
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <label for="device" class="block text-gray-800 font-medium mb-2">Какое устройство требует ремонта?</label>
+                    <select id="device" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                        <option value="">Выберите устройство</option>
+                        <option value="phone">Смартфон</option>
+                        <option value="laptop">Ноутбук</option>
+                        <option value="tablet">Планшет</option>
+                        <option value="console">Игровая консоль</option>
+                        <option value="tv">Телевизор</option>
+                        <option value="other">Другое</option>
+                    </select>
+                </div>
+                
+                <div class="mb-6">
+                    <label for="problem" class="block text-gray-800 font-medium mb-2">Опишите проблему</label>
+                    <textarea id="problem" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" placeholder="Подробно опишите, что случилось с вашим устройством..."></textarea>
+                </div>
+                
+                <button type="submit" class="w-full md:w-auto px-8 py-4 bg-gray-900 text-white font-bold rounded-full hover:bg-gray-800 transition transform hover:scale-105">
+                    Оставить заявку
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Contacts Section -->
+<section id="contacts" class="py-20 bg-gray-800">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+            <h2 class="font-orbitron text-3xl md:text-4xl font-bold text-white mb-4">Контакты</h2>
+            <div class="w-20 h-1 bg-red-600 mx-auto mb-6"></div>
+            <p class="text-gray-400 max-w-2xl mx-auto">
+                Мы всегда рады помочь вам с ремонтом ваших устройств
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div>
+                <div class="bg-gray-900 rounded-lg p-8 mb-8">
+                    <h3 class="text-xl font-bold text-white mb-6">Контактная информация</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="flex">
+                            <div class="flex-shrink-0 mr-4 text-red-500">
+                                <i class="fas fa-map-marker-alt text-2xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-white mb-1">Адрес 1</h4>
+                                <p class="text-gray-400">г. Смоленск, пр. Строителей, 7Б</p>
+                                <p class="text-gray-400 mt-1">Телефон: 688-788, +7(904)364-48-13</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex">
+                            <div class="flex-shrink-0 mr-4 text-red-500">
+                                <i class="fas fa-map-marker-alt text-2xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-white mb-1">Адрес 2</h4>
+                                <p class="text-gray-400">д. Новосельцы, ул. Юбилейная, 16</p>
+                                <p class="text-gray-400 mt-1">Телефон: 67-44-67, +7(900)219-02-70</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex">
+                            <div class="flex-shrink-0 mr-4 text-red-500">
+                                <i class="fas fa-envelope text-2xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-white mb-1">Email</h4>
+                                <p class="text-gray-400">mmatrix_repair@mail.ru</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex">
+                            <div class="flex-shrink-0 mr-4 text-red-500">
+                                <i class="fas fa-clock text-2xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-white mb-1">Часы работы</h4>
+                                <p class="text-gray-400">Пн-Сб: 10:00 - 19:00<br>Вс: Выходной</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-900 rounded-lg p-8">
+                    <h3 class="text-xl font-bold text-white mb-6">Мы в социальных сетях</h3>
+                    <div class="flex space-x-4">
+                        <a href="https://vk.com/matrix_repair" class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center text-white hover:bg-red-600 transition">
+                            <i class="fab fa-vk text-xl"></i>
+                        </a>
+                        <a href="https://t.me/MatrixService_bot" class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center text-white hover:bg-red-600 transition">
+                            <i class="fab fa-telegram text-xl"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center text-white hover:bg-red-600 transition">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center text-white hover:bg-red-600 transition">
+                            <i class="fab fa-youtube text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div>
+                <div class="bg-gray-900 rounded-lg overflow-hidden h-full">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d362.505750738136!2d32.096893803670675!3d54.76646441938989!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46cef62add7f7519%3A0xdd89a9e01799cd88!2z0J_RgNC-0YHQv9C10LrRgiDQodGC0YDQvtC40YLQtdC70LXQuSwgN9CRLCDQodC80L7Qu9C10L3RgdC6LCDQodC80L7Qu9C10L3RgdC60LDRjyDQvtCx0LsuLCAyMTQwMzE!5e0!3m2!1sru!2sru!4v1750303237427!5m2!1sru!2sru" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" class="min-h-[400px] lg:min-h-[600px]"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-900 py-12 border-t border-gray-800">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-6 md:mb-0">
+                <a href="#" class="flex items-center">
+                    <span class="font-orbitron text-2xl font-bold text-white neon-text">MATRIX</span>
+                    <span class="ml-2 text-xs font-light text-gray-300">SERVICE CENTER</span>
+                </a>
+                <p class="text-gray-500 mt-2 text-sm">
+                    Профессиональный ремонт электронной техники с 2013 года
+                </p>
+            </div>
+            
+            <div class="flex flex-col items-center md:items-end">
+                <div class="flex space-x-6 mb-4">
+                    <a href="https://vk.com/matrix_repair" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-vk"></i>
+                    </a>
+                    <a href="https://t.me/MatrixService_bot" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+                <p class="text-gray-500 text-sm">
+                    &copy; 2025 Matrix Service Center. Все права защищены.
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Floating Action Button -->
+<div class="fixed bottom-6 right-6 z-50">
+<button id="supportBtn" class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center text-white shadow-lg glow-btn hover:bg-red-700 transition transform hover:scale-110 pulse-animation"> <i class="fas fa-phone-alt text-xl"></i>
+ </button>
+ </div>
+ <!-- Support Modal -->
+ <div id="supportModal" class="hidden fixed bottom-24 right-6 w-80 bg-white rounded-lg shadow-xl z-50 border border-gray-200"> <div class="p-4"> 
+    <div class="flex justify-between items-center mb-3"> <h3 class="text-lg font-semibold text-gray-800">Техническая поддержка</h3> 
+        <button id="closeModal" class="text-gray-500 hover:text-gray-700"> 
+            <i class="fas fa-times"></i> </button>
+     </div>
+         <div id="chatContainer" class="h-64 overflow-y-auto mb-4 space-y-2">
+        <!-- Сообщения будут появляться здесь -->
+        <div class="bg-gray-100 p-3 rounded-lg">
+            <p class="text-gray-700">Здравствуйте! Чем мы можем вам помочь? Выберите вопрос:</p>
+        </div>
+    </div>
+    
+    <div id="questionButtons" class="space-y-2">
+        <!-- Кнопки вопросов будут добавляться здесь динамически -->
+    </div>
+</div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Обработчик для кнопок "Все услуги"
+        const toggleButtons = document.querySelectorAll('.toggle-services');
+        
+        toggleButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const card = this.closest('.service-card');
+                const moreServices = card.querySelector('.more-services');
+                const icon = this.querySelector('i');
+                
+                moreServices.classList.toggle('active');
+                this.classList.toggle('active');
+                
+                if (moreServices.classList.contains('active')) {
+                    this.innerHTML = 'Скрыть <i class="fas fa-arrow-up"></i>';
+                } else {
+                    this.innerHTML = 'Все услуги <i class="fas fa-arrow-down"></i>';
+                }
+            });
+        });
+        
+        // Анимация появления карточек при скролле
+        const serviceCards = document.querySelectorAll('.service-card');
+        
+        function checkCards() {
+            const triggerBottom = window.innerHeight / 5 * 4;
+            
+            serviceCards.forEach(card => {
+                const cardTop = card.getBoundingClientRect().top;
+                
+                if (cardTop < triggerBottom) {
+                    card.style.opacity = 1;
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+        }
+        
+        // Инициализация
+        serviceCards.forEach(card => {
+            card.style.opacity = 0;
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        });
+        
+        window.addEventListener('scroll', checkCards);
+        checkCards(); // Проверить при загрузке
+
+        // Обработчик формы
+        const contactForm = document.querySelector('#contact-form form');
+        
+        if (contactForm) {
+            contactForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const nameInput = document.getElementById('name');
+                const phoneInput = document.getElementById('phone');
+                const deviceSelect = document.getElementById('device');
+                const problemTextarea = document.getElementById('problem');
+                const submitButton = contactForm.querySelector('button[type="submit"]');
+                
+                const originalButtonText = submitButton.innerHTML;
+                submitButton.disabled = true;
+                submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправка...';
+                
+                try {
+                    const formData = {
+                        name: nameInput.value.trim(),
+                        phone: phoneInput.value.trim(),
+                        device: deviceSelect.value,
+                        problem: problemTextarea.value.trim(),
+                        type: 'repair' // Тип заявки - ремонт
+                    };
+                    
+                    // Валидация
+                    if (!formData.name || !formData.phone || !formData.problem) {
+                        throw new Error('Пожалуйста, заполните все обязательные поля');
+                    }
+                    
+                    // Отправка на сервер
+                    const response = await fetch('http://localhost:5000/api/repair-request', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(formData)
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (!result.success) {
+                        throw new Error(result.error || 'Произошла ошибка при отправке');
+                    }
+                    
+                    showAlert('✅ Ваша заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.', 'success');
+                    contactForm.reset();
+                    
+                } catch (error) {
+                    showAlert(`❌ Ошибка: ${error.message}`, 'error');
+                    console.error('Ошибка:', error);
+                    
+                } finally {
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = originalButtonText;
+                }
+            });
+        }
+        
+        // Обработчик кнопки обратного звонка
+        const callbackButtons = document.querySelectorAll('.callback-btn');
+        
+        callbackButtons.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                showCallbackForm();
+            });
+        });
+        
+        // Обработчик мобильного меню
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+        
+        // Функция показа уведомления
+        function showAlert(message, type = 'success') {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `fixed top-4 right-4 px-6 py-4 rounded-lg shadow-lg z-50 ${
+                type === 'success' ? 'bg-green-500' : 'bg-red-500'
+            } text-white flex items-center`;
+            
+            const icon = document.createElement('i');
+            icon.className = type === 'success' ? 'fas fa-check-circle mr-2' : 'fas fa-exclamation-circle mr-2';
+            
+            alertDiv.appendChild(icon);
+            alertDiv.appendChild(document.createTextNode(message));
+            
+            document.body.appendChild(alertDiv);
+            
+            setTimeout(() => {
+                alertDiv.classList.add('opacity-0', 'transition-opacity', 'duration-500');
+                setTimeout(() => alertDiv.remove(), 500);
+            }, 5000);
+        }
+        
+        // Функция показа формы обратного звонка
+        function showCallbackForm() {
+            // Здесь можно реализовать показ модального окна с формой
+            showAlert('Форма обратного звонка будет реализована позже', 'success');
+        }
+
+        // Обработчик модального окна поддержки
+        const supportBtn = document.getElementById('supportBtn');
+        const supportModal = document.getElementById('supportModal');
+        const closeModal = document.getElementById('closeModal');
+        const chatContainer = document.getElementById('chatContainer');
+        const questionButtons = document.getElementById('questionButtons');
+        
+        // Пример вопросов и ответов
+        const qaPairs = {
+            "Как оформить заказ?": "Вы можете оформить заказ через корзину на нашем сайте. Просто добавьте товары и следуйте инструкциям.",
+            "Какие способы оплаты?": "Мы принимаем карты Visa/Mastercard, наличные при получении и переводы через СБП.",
+            "Как узнать статус заказа?": "Статус заказа можно проверить в личном кабинете или мы отправим вам SMS при изменении статуса.",
+            "Есть ли доставка в мой город?": "Доставка осуществляется по всей России. Уточнить наличие доставки в ваш город можно при оформлении заказа.",
+            "Другой вопрос": "Лучше позвоните нам ☎️"
+        };
+        
+        // Показываем модальное окно
+        if (supportBtn) {
+            supportBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                supportModal.classList.remove('hidden');
+                generateQuestionButtons();
+            });
+        }
+        
+        // Закрываем модальное окно
+        if (closeModal) {
+            closeModal.addEventListener('click', function() {
+                supportModal.classList.add('hidden');
+            });
+        }
+        
+        // Генерация кнопок вопросов
+        function generateQuestionButtons() {
+            if (!questionButtons) return;
+            
+            questionButtons.innerHTML = '';
+            Object.keys(qaPairs).forEach(question => {
+                const btn = document.createElement('button');
+                btn.className = 'w-full bg-blue-100 hover:bg-blue-200 text-blue-800 py-2 px-4 rounded transition text-left';
+                btn.textContent = question;
+                btn.addEventListener('click', function() {
+                    addMessage(question, 'user');
+                    setTimeout(() => {
+                        addMessage(qaPairs[question], 'support');
+                    }, 500);
+                });
+                questionButtons.appendChild(btn);
+            });
+        }
+        
+        // Добавление сообщения в чат
+        function addMessage(text, sender) {
+            if (!chatContainer) return;
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = sender === 'user' 
+                ? 'bg-blue-100 p-3 rounded-lg ml-8' 
+                : 'bg-gray-100 p-3 rounded-lg mr-8';
+            
+            const messageText = document.createElement('p');
+            messageText.className = sender === 'user' ? 'text-blue-700' : 'text-gray-700';
+            messageText.textContent = text;
+            
+            messageDiv.appendChild(messageText);
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        // Анимация счетчиков
+        const counters = document.querySelectorAll('.counter');
+        const speed = 200;
+        
+        counters.forEach(counter => {
+            const target = +counter.getAttribute('data-target');
+            const count = +counter.innerText;
+            const increment = target / speed;
+            
+            if (count < target) {
+                counter.innerText = Math.ceil(count + increment);
+                setTimeout(updateCounter, 1, counter, target, increment);
+            } else {
+                counter.innerText = target;
+            }
+        });
+        
+        function updateCounter(counter, target, increment) {
+            const count = +counter.innerText;
+            if (count < target) {
+                counter.innerText = Math.ceil(count + increment);
+                setTimeout(updateCounter, 1, counter, target, increment);
+            } else {
+                counter.innerText = target;
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отзывы - Сервисный центр Matrix</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style-4.css">
+</head>
+<body class="antialiased">
+    <!-- New Header -->
+    <header class="fixed-menu">
+        <div class="menu-container">
+            <div class="logo-wrapper">
+                <a href="index.html" class="logo-link">
+                    <span class="logo-text">MATRIX</span>
+                    <span class="logo-subtext">Сервисный центр</span>
+                </a>
+            </div>
+            
+            <nav class="desktop-nav">
+                <a href="index.html" class="nav-link">Главная</a>
+                <a href="yslygi.html" class="nav-link">Услуги</a>
+                <a href="onas.html" class="nav-link">О нас</a>
+                <a href="otsv.html" class="nav-link">Отзывы</a>
+                <a href="kontakt.html" class="nav-link">Контакты</a>
+            </nav>
+            
+            <div class="menu-actions">
+                <a href="zakaz.html" class="order-btn">
+                    Заказать ремонт
+                </a>
+                <button class="callback-btn">
+                    Заказать звонок
+                </button>
+                <button class="mobile-menu-btn" id="mobile-menu-button">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobile-menu">
+            <div class="mobile-menu-content">
+                <a href="index.html" class="mobile-nav-link">Главная</a>
+                <a href="yslygi.html" class="mobile-nav-link">Услуги</a>
+                <a href="onas.html" class="mobile-nav-link">О нас</a>
+                <a href="otsv.html" class="mobile-nav-link">Отзывы</a>
+                <a href="kontakt.html" class="mobile-nav-link">Контакты</a>
+                <a href="zakaz.html" class="mobile-order-btn">
+                    Заказать ремонт
+                </a>
+                <button class="mobile-callback-btn">
+                    Заказать звонок
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Главный баннер -->
+    <section class="particles-bg relative py-20 px-6">
+        <div id="particles-js" class="absolute inset-0"></div>
+        <div class="container mx-auto text-center relative z-10">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4 animate-slide-in">Отзывы наших клиентов</h1>
+            <p class="text-xl md:text-2xl opacity-80 mb-8 animate-slide-in" style="animation-delay: 0.2s;">Реальные мнения о качестве нашего сервиса</p>
+        </div>
+    </section>
+
+    <!-- Фильтр отзывов -->
+    <section class="py-12 bg-gray-900 px-6">
+        <div class="container mx-auto">
+            <div class="flex flex-wrap justify-center gap-3 mb-12">
+                <button class="filter-btn bg-red-600 text-white px-6 py-2 rounded-full font-medium" data-filter="all">Все</button>
+                <button class="filter-btn bg-gray-800 hover:bg-gray-700 text-white px-6 py-2 rounded-full font-medium" data-filter="phone">Телефоны</button>
+                <button class="filter-btn bg-gray-800 hover:bg-gray-700 text-white px-6 py-2 rounded-full font-medium" data-filter="laptop">Ноутбуки</button>
+                <button class="filter-btn bg-gray-800 hover:bg-gray-700 text-white px-6 py-2 rounded-full font-medium" data-filter="tablet">Планшеты</button>
+                <button class="filter-btn bg-gray-800 hover:bg-gray-700 text-white px-6 py-2 rounded-full font-medium" data-filter="other">Другое</button>
+            </div>
+            
+            <!-- Сортировка -->
+            <div class="flex justify-end mb-8">
+                <div class="flex items-center">
+                    <span class="mr-2">Сортировать:</span>
+                    <select id="sort-select" class="bg-gray-800 text-white px-4 py-2 rounded">
+                        <option value="date-new">По дате (новые)</option>
+                        <option value="date-old">По дате (старые)</option>
+                        <option value="rating-high">По рейтингу (высокий)</option>
+                        <option value="rating-low">По рейтингу (низкий)</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Блок отзывов -->
+            <div class="testimonial-slider">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="reviews-container">
+                    <!-- Отзыв 1 -->
+                    <div class="testimonial-card bg-gray-800 rounded-lg p-6 card-hover fade-in best-review" data-category="phone" data-date="2024-05-20" data-rating="5">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center text-white font-bold mr-4">А</div>
+                            <div>
+                                <h3 class="font-bold">Анна</h3>
+                                <p class="text-gray-400 text-sm">20.05.2024</p>
+                            </div>
+                        </div>
+                        <div class="flex mb-3">
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                        </div>
+                        <p class="mb-4">Отличный сервис! Починили экран iPhone 12 за 1 день, хотя в другом сервисе сказали, что нужно менять весь модуль. Цены адекватные, персонал вежливый. Обязательно вернусь снова!</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-400 text-sm"><i class="fas fa-mobile-alt mr-1"></i> iPhone 12</span>
+                            <div class="flex items-center">
+                                <button class="like-btn text-gray-400 hover:text-red-500 mr-2"><i class="far fa-heart"></i></button>
+                                <span class="likes-count text-sm">24</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Отзыв 2 -->
+                    <div class="testimonial-card bg-gray-800 rounded-lg p-6 card-hover fade-in" data-category="laptop" data-date="2024-05-18" data-rating="4">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold mr-4">И</div>
+                            <div>
+                                <h3 class="font-bold">Иван</h3>
+                                <p class="text-gray-400 text-sm">18.05.2024</p>
+                            </div>
+                        </div>
+                        <div class="flex mb-3">
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star"></i>
+                        </div>
+                        <p class="mb-4">Чистили ноутбук от пыли и меняли термопасту. Работа сделана качественно, но пришлось ждать дольше обещанного. В целом впечатление положительное, цена адекватная.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-400 text-sm"><i class="fas fa-laptop mr-1"></i> ASUS ROG Strix</span>
+                            <div class="flex items-center">
+                                <button class="like-btn text-gray-400 hover:text-red-500 mr-2"><i class="far fa-heart"></i></button>
+                                <span class="likes-count text-sm">12</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Отзыв 3 -->
+                    <div class="testimonial-card bg-gray-800 rounded-lg p-6 card-hover fade-in" data-category="tablet" data-date="2024-05-15" data-rating="5">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center text-white font-bold mr-4">Е</div>
+                            <div>
+                                <h3 class="font-bold">Елена</h3>
+                                <p class="text-gray-400 text-sm">15.05.2024</p>
+                            </div>
+                        </div>
+                        <div class="flex mb-3">
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                        </div>
+                        <p class="mb-4">Заменяли батарею в iPad Air. Сделали очень быстро, всего за 2 часа. Даже не ожидала такого сервиса. Персонал приветливый, объяснили все нюансы. Рекомендую!</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-400 text-sm"><i class="fas fa-tablet mr-1"></i> iPad Air 3</span>
+                            <div class="flex items-center">
+                                <button class="like-btn text-gray-400 hover:text-red-500 mr-2"><i class="far fa-heart"></i></button>
+                                <span class="likes-count text-sm">18</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Отзыв 4 -->
+                    <div class="testimonial-card bg-gray-800 rounded-lg p-6 card-hover fade-in" data-category="other" data-date="2024-05-12" data-rating="4">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold mr-4">Д</div>
+                            <div>
+                                <h3 class="font-bold">Дмитрий</h3>
+                                <p class="text-gray-400 text-sm">12.05.2024</p>
+                            </div>
+                        </div>
+                        <div class="flex mb-3">
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star"></i>
+                        </div>
+                        <p class="mb-4">Ремонтировали игровую консоль. Проблема была сложная, но мастера справились. Единственное - запчасти пришлось ждать неделю. В остальном все отлично, цена соответствовала сложности работы.</p>
+                            <div class="flex justify-between items-center">
+                            <span class="text-gray-400 text-sm"><i class="fas fa-gamepad mr-1"></i> PlayStation 5</span>
+                            <div class="flex items-center">
+                                <button class="like-btn text-gray-400 hover:text-red-500 mr-2"><i class="far fa-heart"></i></button>
+                                <span class="likes-count text-sm">8</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Отзыв 5 -->
+                    <div class="testimonial-card bg-gray-800 rounded-lg p-6 card-hover fade-in" data-category="phone" data-date="2024-05-10" data-rating="5">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-yellow-600 rounded-full flex items-center justify-center text-white font-bold mr-4">О</div>
+                            <div>
+                                <h3 class="font-bold">Ольга</h3>
+                                <p class="text-gray-400 text-sm">10.05.2024</p>
+                            </div>
+                        </div>
+                        <div class="flex mb-3">
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                        </div>
+                        <p class="mb-4">Заменяли разъем зарядки в Samsung Galaxy. Сделали за час, пока я пила кофе в соседнем кафе. Очень удобно, что можно подождать рядом. Цена ниже, чем в официальном сервисе, а качество на высоте.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-400 text-sm"><i class="fas fa-mobile-alt mr-1"></i> Samsung Galaxy S21</span>
+                            <div class="flex items-center">
+                                <button class="like-btn text-gray-400 hover:text-red-500 mr-2"><i class="far fa-heart"></i></button>
+                                <span class="likes-count text-sm">15</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Отзыв 6 -->
+                    <div class="testimonial-card bg-gray-800 rounded-lg p-6 card-hover fade-in" data-category="laptop" data-date="2024-05-08" data-rating="3">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-pink-600 rounded-full flex items-center justify-center text-white font-bold mr-4">С</div>
+                            <div>
+                                <h3 class="font-bold">Сергей</h3>
+                                <p class="text-gray-400 text-sm">08.05.2024</p>
+                            </div>
+                        </div>
+                        <div class="flex mb-3">
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star"></i>
+                            <i class="fas fa-star rating-star"></i>
+                        </div>
+                        <p class="mb-4">Ремонтировали материнскую плату ноутбука. В целом все нормально, но пришлось заказывать запчасть, что заняло дополнительное время. Персонал вежливый, но сроки ремонта могли бы быть точнее.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-400 text-sm"><i class="fas fa-laptop mr-1"></i> HP Pavilion</span>
+                            <div class="flex items-center">
+                                <button class="like-btn text-gray-400 hover:text-red-500 mr-2"><i class="far fa-heart"></i></button>
+                                <span class="likes-count text-sm">5</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hidden" id="reviews-page-2">
+    <!-- Отзыв 7 -->
+    <div class="testimonial-card bg-gray-800 rounded-lg p-6 card-hover fade-in" data-category="phone" data-date="2024-05-05" data-rating="5">
+        <div class="flex items-center mb-4">
+            <div class="w-12 h-12 bg-indigo-600 rounded-full flex items-center justify-center text-white font-bold mr-4">М</div>
+            <div>
+                <h3 class="font-bold">Михаил</h3>
+                <p class="text-gray-400 text-sm">05.05.2024</p>
+            </div>
+        </div>
+        <div class="flex mb-3">
+            <i class="fas fa-star rating-star active"></i>
+            <i class="fas fa-star rating-star active"></i>
+            <i class="fas fa-star rating-star active"></i>
+            <i class="fas fa-star rating-star active"></i>
+            <i class="fas fa-star rating-star active"></i>
+        </div>
+        <p class="mb-4">Ремонтировали разбитый экран на Xiaomi. Сделали все быстро и качественно, цена приятно удивила. Персонал вежливый, объяснили все нюансы ремонта. Буду рекомендовать!</p>
+        <div class="flex justify-between items-center">
+            <span class="text-gray-400 text-sm"><i class="fas fa-mobile-alt mr-1"></i> Xiaomi Redmi Note 10</span>
+            <div class="flex items-center">
+                <button class="like-btn text-gray-400 hover:text-red-500 mr-2"><i class="far fa-heart"></i></button>
+                <span class="likes-count text-sm">10</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Отзыв 8 -->
+    <div class="testimonial-card bg-gray-800 rounded-lg p-6 card-hover fade-in best-review" data-category="laptop" data-date="2024-05-03" data-rating="5">
+        <div class="flex items-center mb-4">
+            <div class="w-12 h-12 bg-teal-600 rounded-full flex items-center justify-center text-white font-bold mr-4">К</div>
+            <div>
+                <h3 class="font-bold">Кирилл</h3>
+                <p class="text-gray-400 text-sm">03.05.2024</p>
+            </div>
+        </div>
+        <div class="flex mb-3">
+            <i class="fas fa-star rating-star active"></i>
+            <i class="fas fa-star rating-star active"></i>
+            <i class="fas fa-star rating-star active"></i>
+            <i class="fas fa-star rating-star active"></i>
+            <i class="fas fa-star rating-star active"></i>
+        </div>
+        <p class="mb-4">Чинили ноутбук после залития. Спасли данные и восстановили работоспособность. Мастер настоящий профессионал, видно что с опытом. Сервис на высшем уровне!</p>
+        <div class="flex justify-between items-center">
+            <span class="text-gray-400 text-sm"><i class="fas fa-laptop mr-1"></i> Lenovo ThinkPad</span>
+            <div class="flex items-center">
+                <button class="like-btn text-gray-400 hover:text-red-500 mr-2"><i class="far fa-heart"></i></button>
+                <span class="likes-count text-sm">22</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Отзыв 9 -->
+    <div class="testimonial-card bg-gray-800 rounded-lg p-6 card-hover fade-in" data-category="tablet" data-date="2024-04-28" data-rating="4">
+        <div class="flex items-center mb-4">
+            <div class="w-12 h-12 bg-orange-600 rounded-full flex items-center justify-center text-white font-bold mr-4">Т</div>
+            <div>
+                <h3 class="font-bold">Татьяна</h3>
+                <p class="text-gray-400 text-sm">28.04.2024</p>
+            </div>
+        </div>
+        <div class="flex mb-3">
+            <i class="fas fa-star rating-star active"></i>
+            <i class="fas fa-star rating-star active"></i>
+            <i class="fas fa-star rating-star active"></i>
+            <i class="fas fa-star rating-star active"></i>
+            <i class="fas fa-star rating-star"></i>
+        </div>
+        <p class="mb-4">Заменяли экран на планшете. Сделали быстро, но немного дороже чем ожидала. В целом качеством довольна, но цена могла бы быть ниже.</p>
+        <div class="flex justify-between items-center">
+            <span class="text-gray-400 text-sm"><i class="fas fa-tablet mr-1"></i> Samsung Galaxy Tab</span>
+            <div class="flex items-center">
+                <button class="like-btn text-gray-400 hover:text-red-500 mr-2"><i class="far fa-heart"></i></button>
+                <span class="likes-count text-sm">7</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Отзыв 10 -->
+    <div class="testimonial-card bg-gray-800 rounded-lg p-6 card-hover fade-in" data-category="other" data-date="2024-04-25" data-rating="5">
+        <div class="flex items-center mb-4">
+            <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold mr-4">А</div>
+            <div>
+                <h3 class="font-bold">Александр</h3>
+                <p class="text-gray-400 text-sm">25.04.2024</p>
+            </div>
+        </div>
+        <div class="flex mb-3">
+            <i class="fas fa-star rating-star active"></i>
+            <i class="fas fa-star rating-star active"></i>
+            <i class="fas fa-star rating-star active"></i>
+            <i class="fas fa-star rating-star active"></i>
+            <i class="fas fa-star rating-star active"></i>
+        </div>
+        <p class="mb-4">Ремонтировали игровой контроллер. Проблема была нестандартная, но мастера нашли решение. Отличный сервис, индивидуальный подход. Рекомендую!</p>
+        <div class="flex justify-between items-center">
+            <span class="text-gray-400 text-sm"><i class="fas fa-gamepad mr-1"></i> Xbox Controller</span>
+            <div class="flex items-center">
+                <button class="like-btn text-gray-400 hover:text-red-500 mr-2"><i class="far fa-heart"></i></button>
+                <span class="likes-count text-sm">14</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Отзыв 11 -->
+    <div class="testimonial-card bg-gray-800 rounded-lg p-6 card-hover fade-in" data-category="phone" data-date="2024-04-20" data-rating="4">
+        <div class="flex items-center mb-4">
+            <div class="w-12 h-12 bg-pink-600 rounded-full flex items-center justify-center text-white font-bold mr-4">Н</div>
+            <div>
+                <h3 class="font-bold">Наталья</h3>
+                <p class="text-gray-400 text-sm">20.04.2024</p>
+            </div>
+        </div>
+        <div class="flex mb-3">
+            <i class="fas fa-star rating-star active"></i>
+            <i class="fas fa-star rating-star active"></i>
+            <i class="fas fa-star rating-star active"></i>
+            <i class="fas fa-star rating-star active"></i>
+            <i class="fas fa-star rating-star"></i>
+        </div>
+        <p class="mb-4">Меняли батарею в телефоне. Сделали быстро, но забыли позвонить когда готово, пришлось звонить самому. В остальном все хорошо, телефон работает отлично.</p>
+        <div class="flex justify-between items-center">
+            <span class="text-gray-400 text-sm"><i class="fas fa-mobile-alt mr-1"></i> Huawei P30</span>
+            <div class="flex items-center">
+                <button class="like-btn text-gray-400 hover:text-red-500 mr-2"><i class="far fa-heart"></i></button>
+                <span class="likes-count text-sm">9</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Отзыв 12 -->
+    <div class="testimonial-card bg-gray-800 rounded-lg p-6 card-hover fade-in" data-category="laptop" data-date="2024-04-15" data-rating="5">
+        <div class="flex items-center mb-4">
+            <div class="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center text-white font-bold mr-4">П</div>
+            <div>
+                <h3 class="font-bold">Павел</h3>
+                <p class="text-gray-400 text-sm">15.04.2024</p>
+            </div>
+        </div>
+        <div class="flex mb-3">
+            <i class="fas fa-star rating-star active"></i>
+            <i class="fas fa-star rating-star active"></i>
+            <i class="fas fa-star rating-star active"></i>
+            <i class="fas fa-star rating-star active"></i>
+            <i class="fas fa-star rating-star active"></i>
+        </div>
+        <p class="mb-4">Чинили ноутбук после падения. Заменили матрицу и починили корпус. Работа сделана идеально, даже не видно что был ремонт. Спасибо за качественную работу!</p>
+        <div class="flex justify-between items-center">
+            <span class="text-gray-400 text-sm"><i class="fas fa-laptop mr-1"></i> Dell XPS 15</span>
+            <div class="flex items-center">
+                <button class="like-btn text-gray-400 hover:text-red-500 mr-2"><i class="far fa-heart"></i></button>
+                <span class="likes-count text-sm">17</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно для выбора платформы отзыва -->
+<div class="modal" id="review-platform-modal">
+    <div class="modal-content bg-gray-900 rounded-lg p-8 max-w-md">
+        <span class="close-modal">&times;</span>
+        <h3 class="text-2xl font-bold mb-6 text-center">Где вы хотите оставить отзыв?</h3>
+        
+        <div class="grid grid-cols-1 gap-4">
+            <a href="#" class="platform-btn bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg flex items-center justify-center">
+                <i class="fab fa-google mr-2"></i> Google Отзывы
+            </a>
+            
+            <a href="#" class="platform-btn bg-yellow-500 hover:bg-yellow-600 text-gray-900 px-6 py-3 rounded-lg flex items-center justify-center">
+                <i class="fas fa-star mr-2"></i> Яндекс.Карты
+            </a>
+            
+            <a href="#" class="platform-btn bg-violet-600 hover:bg-violet-700 text-white px-6 py-3 rounded-lg flex items-center justify-center">
+                <i class="fab fa-vk mr-2"></i> ВКонтакте
+            </a>
+            
+            <a href="#" class="platform-btn bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg flex items-center justify-center">
+                <i class="fab fa-telegram mr-2"></i> Telegram
+            </a>
+            
+            <a href="#" class="platform-btn bg-gray-800 hover:bg-gray-700 text-white px-6 py-3 rounded-lg flex items-center justify-center">
+                <i class="fas fa-envelope mr-2"></i> Написать нам
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно заявки на отзыв -->
+<div class="modal" id="review-request-modal">
+    <div class="modal-content bg-gray-900 rounded-lg p-8 max-w-md">
+        <span class="close-modal">&times;</span>
+        <h3 class="text-2xl font-bold mb-2 text-center">Оставить отзыв</h3>
+        <p class="text-gray-400 text-center mb-6">Мы будем рады вашему мнению о нашей работе</p>
+        
+        <form id="review-request-form">
+            <div class="mb-4">
+                <label for="request-name" class="block mb-2">Ваше имя*</label>
+                <input type="text" id="request-name" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:border-red-500" required>
+            </div>
+            
+            <div class="mb-4">
+                <label for="request-phone" class="block mb-2">Телефон*</label>
+                <input type="tel" id="request-phone" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:border-red-500" required>
+            </div>
+            
+            <div class="mb-6">
+                <label for="request-device" class="block mb-2">Какое устройство ремонтировали?</label>
+                <input type="text" id="request-device" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:border-red-500">
+            </div>
+            
+            <div class="text-center">
+                <button type="submit" class="btn-glow bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-full font-medium w-full">
+                    Отправить заявку
+                </button>
+            </div>
+        </form>
+        
+        <div class="mt-6 text-center">
+            <p class="text-gray-400 text-sm">После отправки заявки мы свяжемся с вами и поможем оставить отзыв</p>
+        </div>
+    </div>
+</div>
+            
+            <!-- Пагинация -->
+            <div class="flex justify-center mt-12">
+                <button class="px-4 py-2 bg-gray-800 text-white rounded-l-lg hover:bg-gray-700">Назад</button>
+                <button class="px-4 py-2 bg-red-600 text-white">1</button>
+                <button class="px-4 py-2 bg-gray-800 text-white hover:bg-gray-700">2</button>
+                <button class="px-4 py-2 bg-gray-800 text-white hover:bg-gray-700">3</button>
+                <button class="px-4 py-2 bg-gray-800 text-white rounded-r-lg hover:bg-gray-700">Вперед</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Видео отзывы -->
+    <section class="py-16 px-6 bg-gray-900">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12">О нас говорят</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Видео 1 -->
+                <div class="video-thumbnail rounded-lg overflow-hidden relative" data-video-id="video1">
+                    <img src="https://via.placeholder.com/500x300/222222/ffffff?text=Video+1" alt="Видео отзыв" class="w-full">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-play text-white text-2xl"></i>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                        <h3 class="font-bold">Отзыв о ремонте iPhone</h3>
+                        <p class="text-sm text-gray-300">Анна, 20.05.2024</p>
+                    </div>
+                </div>
+                
+                <!-- Видео 2 -->
+                <div class="video-thumbnail rounded-lg overflow-hidden relative" data-video-id="video2">
+                    <img src="https://via.placeholder.com/500x300/222222/ffffff?text=Video+2" alt="Видео отзыв" class="w-full">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-play text-white text-2xl"></i>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                        <h3 class="font-bold">Ремонт ноутбука ASUS</h3>
+                        <p class="text-sm text-gray-300">Иван, 18.05.2024</p>
+                    </div>
+                </div>
+                
+                <!-- Видео 3 -->
+                <div class="video-thumbnail rounded-lg overflow-hidden relative" data-video-id="video3">
+                    <img src="https://via.placeholder.com/500x300/222222/ffffff?text=Video+3" alt="Видео отзыв" class="w-full">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-play text-white text-2xl"></i>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                        <h3 class="font-bold">Замена батареи iPad</h3>
+                        <p class="text-sm text-gray-300">Елена, 15.05.2024</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <button class="btn-glow bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-full font-medium">
+                    <i class="fas fa-video mr-2"></i> Добавить видеоотзыв
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Форма для отзыва -->
+    <section class="py-16 px-6 bg-gray-800">
+        <div class="container mx-auto max-w-4xl">
+            <h2 class="text-3xl font-bold text-center mb-12">Оставьте свой отзыв</h2>
+            
+            <form id="review-form" class="bg-gray-900 rounded-lg p-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="name" class="block mb-2">Ваше имя*</label>
+                        <input type="text" id="name" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:border-red-500" required>
+                        <p class="text-red-500 text-sm mt-1 hidden" id="name-error">Пожалуйста, введите ваше имя</p>
+                    </div>
+                    <div>
+                        <label for="email" class="block mb-2">Email*</label>
+                        <input type="email" id="email" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:border-red-500" required>
+                        <p class="text-red-500 text-sm mt-1 hidden" id="email-error">Пожалуйста, введите корректный email</p>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <label for="device" class="block mb-2">Устройство*</label>
+                    <input type="text" id="device" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:border-red-500" required>
+                    <p class="text-red-500 text-sm mt-1 hidden" id="device-error">Пожалуйста, укажите устройство</p>
+                </div>
+                
+                <div class="mb-6">
+                    <label for="review-text" class="block mb-2">Текст отзыва*</label>
+                    <textarea id="review-text" rows="5" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:border-red-500" required></textarea>
+                    <p class="text-red-500 text-sm mt-1 hidden" id="text-error">Пожалуйста, напишите отзыв</p>
+                </div>
+                
+                <div class="mb-8">
+                    <label class="block mb-2">Оценка*</label>
+                    <div class="flex items-center" id="rating-stars">
+                        <i class="fas fa-star text-2xl mr-1 cursor-pointer rating-star" data-value="1"></i>
+                        <i class="fas fa-star text-2xl mr-1 cursor-pointer rating-star" data-value="2"></i>
+                        <i class="fas fa-star text-2xl mr-1 cursor-pointer rating-star" data-value="3"></i>
+                        <i class="fas fa-star text-2xl mr-1 cursor-pointer rating-star" data-value="4"></i>
+                        <i class="fas fa-star text-2xl mr-1 cursor-pointer rating-star" data-value="5"></i>
+                    </div>
+                    <input type="hidden" id="rating" value="0" required>
+                    <p class="text-red-500 text-sm mt-1 hidden" id="rating-error">Пожалуйста, поставьте оценку</p>
+                </div>
+                
+                <div class="text-center">
+                    <button type="submit" class="btn-glow bg-red-600 hover:bg-red-700 text-white px-12 py-3 rounded-full font-medium">
+                        Отправить отзыв
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Статистика доверия -->
+    <section class="py-16 px-6 bg-black">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12">Нам доверяют</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="counter-container bg-gray-900 rounded-lg p-8 text-center">
+                    <div class="counter text-5xl font-bold mb-4" data-target="4.9">0</div>
+                    <h3 class="text-xl font-medium">Средний рейтинг</h3>
+                    <p class="text-gray-400 mt-2">из 5 возможных</p>
+                </div>
+                
+                <div class="counter-container bg-gray-900 rounded-lg p-8 text-center">
+                    <div class="counter text-5xl font-bold mb-4" data-target="2587">0</div>
+                    <h3 class="text-xl font-medium">Клиентов рекомендуют</h3>
+                    <p class="text-gray-400 mt-2">наши услуги</p>
+                </div>
+                
+                <div class="counter-container bg-gray-900 rounded-lg p-8 text-center">
+                    <div class="counter text-5xl font-bold mb-4" data-target="2000">0</div>
+                    <h3 class="text-xl font-medium">Отзывов за 2025 год</h3>
+                    <p class="text-gray-400 mt-2">и их количество растет</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Призыв к действию -->
+    <section class="py-16 px-6 bg-red-600">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-6">Оставьте свой отзыв и получите скидку 5% на следующий ремонт!</h2>
+            <p class="text-xl mb-8">Ваше мнение важно для нас и помогает становиться лучше</p>
+            <button class="bg-black hover:bg-gray-900 text-white px-12 py-3 rounded-full font-medium">
+                Написать отзыв
+            </button>
+        </div>
+    </section>
+
+    <!-- Подвал сайта -->
+    <footer class="bg-black py-12 px-6">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="text-3xl font-bold neon-text mb-4">MATRIX</div>
+                    <p class="text-gray-400">Сервисный центр по ремонту цифровой техники с 2010 года.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Контакты</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center text-gray-400"><i class="fas fa-map-marker-alt mr-2 text-red-600"></i> г. Смоленск, пр. Строителей, 7Б</li>
+                        <li class="flex items-center text-gray-400"><i class="fas fa-phone mr-2 text-red-600"></i> +7 (904) 364-48-13</li>
+                        <li class="flex items-center text-gray-400"><i class="fas fa-map-marker-alt mr-2 text-red-600"></i> д. Новосельцы, ул. Юбилейная, 16</li>
+                        <li class="flex items-center text-gray-400"><i class="fas fa-phone mr-2 text-red-600"></i> +7 (900) 219-02-70</li>
+                        <li class="flex items-center text-gray-400"><i class="fas fa-envelope mr-2 text-red-600"></i> mmatrix_repair@mail.ru</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Часы работы</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>Пн-Сб: 10:00 - 19:00</li>
+                        <li>Вс: выходной</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Мы в соцсетях</h3>
+                    <div class="flex space-x-4">
+                        <a href="https://vk.com/matrix_repair" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700"><i class="fab fa-vk"></i></a>
+                        <a href="https://t.me/MatrixService_bot" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700"><i class="fab fa-telegram"></i></a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+                <p>© 2024 Сервисный центр Matrix. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Модальное окно для видео -->
+    <div class="modal" id="video-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="aspect-w-16 aspect-h-9">
+                <iframe id="video-frame" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Скрипты -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="js/script-4.js"></script>
+</body>
+</html>
