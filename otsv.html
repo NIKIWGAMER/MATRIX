@@ -1,0 +1,1626 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отзывы - Сервисный центр Matrix</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0d0d0d;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .neon-text {
+            text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000, 0 0 15px #ff0000, 0 0 20px #ff0000;
+        }
+
+        .btn-glow {
+            transition: all 0.3s ease;
+        }
+
+        .btn-glow:hover {
+            box-shadow: 0 0 15px #ff0000;
+            transform: translateY(-2px);
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 0, 0, 0.3);
+            border: 1px solid #ff0000;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+        }
+
+        .particles-bg {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .particles-bg::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 0, 0, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(255, 0, 0, 0.5);
+            z-index: -1;
+        }
+
+        .rating-star {
+            color: #ccc;
+            transition: color 0.2s;
+        }
+
+        .rating-star.active {
+            color: #ff0000;
+        }
+
+        .video-thumbnail {
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .video-thumbnail:hover {
+            transform: scale(1.05);
+        }
+
+        .video-thumbnail::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 0, 0, 0.3);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .video-thumbnail:hover::after {
+            opacity: 1;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            width: 80%;
+            max-width: 800px;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        .best-review {
+            position: relative;
+        }
+
+        .best-review::after {
+            content: "★";
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            background-color: #ff0000;
+            color: gold;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            box-shadow: 0 0 10px gold;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .counter {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ff0000;
+        }
+
+        .counter-container {
+            transition: all 0.5s ease;
+        }
+
+        .counter-container:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Адаптивность для слайдера отзывов */
+        @media (max-width: 768px) {
+            .testimonial-slider {
+                overflow-x: auto;
+                white-space: nowrap;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+                padding-bottom: 20px;
+            }
+            
+            .testimonial-card {
+                display: inline-block;
+                width: 85%;
+                margin-right: 15px;
+                scroll-snap-align: start;
+                white-space: normal;
+            }
+            
+            .video-thumbnail {
+                width: 100%;
+                margin-bottom: 15px;
+            }
+        }
+
+        /* Анимация появления при скролле */
+        @keyframes slideIn {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .animate-slide-in {
+            animation: slideIn 0.6s ease forwards;
+        }
+
+        /* Menu styles */
+        .fixed-menu {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 50;
+            background-color: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .menu-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0.75rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #e60073, 0 0 20px #e60073;
+        }
+
+        .logo-subtext {
+            margin-left: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 300;
+            color: #d1d5db;
+        }
+
+        /* Desktop navigation */
+        .desktop-nav {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .desktop-nav {
+                display: flex;
+                gap: 2rem;
+            }
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #ef4444;
+        }
+
+        /* Menu buttons */
+        .menu-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .order-btn {
+            display: none;
+            padding: 0.5rem 1.5rem;
+            background-color: #ef4444;
+            color: white;
+            border-radius: 9999px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+        }
+
+        .order-btn:hover {
+            background-color: #dc2626;
+            transform: translateY(-2px);
+        }
+
+        .callback-btn {
+            display: none;
+            padding: 0.5rem 1.5rem;
+            background-color: transparent;
+            border: 2px solid #ef4444;
+            color: #ef4444;
+            border-radius: 9999px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .callback-btn:hover {
+            background-color: #ef4444;
+            color: white;
+        }
+
+        @media (min-width: 768px) {
+            .order-btn, .callback-btn {
+                display: inline-block;
+            }
+        }
+
+        /* Mobile menu button */
+        .mobile-menu-btn {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 2rem;
+            height: 2rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 10;
+        }
+
+        .bar {
+            width: 2rem;
+            height: 0.25rem;
+            background: white;
+            border-radius: 10px;
+            transition: all 0.3s linear;
+            position: relative;
+            transform-origin: 1px;
+        }
+
+        @media (min-width: 768px) {
+            .mobile-menu-btn {
+                display: none;
+            }
+        }
+
+        /* Mobile menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.95);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 5;
+            padding-top: 5rem;
+        }
+
+        .mobile-menu-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 2rem;
+        }
+
+        .mobile-nav-link {
+            color: white;
+            text-decoration: none;
+            font-size: 1.25rem;
+            transition: color 0.3s ease;
+        }
+
+        .mobile-nav-link:hover {
+            color: #ef4444;
+        }
+
+        .mobile-order-btn {
+            display: inline-block;
+            padding: 0.75rem 2rem;
+            background-color: #ef4444;
+            color: white;
+            border-radius: 9999px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+            margin-top: 1rem;
+        }
+
+        .mobile-order-btn:hover {
+            background-color: #dc2626;
+            transform: translateY(-2px);
+        }
+
+        .mobile-callback-btn {
+            padding: 0.75rem 2rem;
+            background-color: transparent;
+            border: 2px solid #ef4444;
+            color: #ef4444;
+            border-radius: 9999px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-callback-btn:hover {
+            background-color: #ef4444;
+            color: white;
+        }
+        .pagination-btn {
+            padding: 0.5rem 1rem;
+            background-color: #1f2937;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pagination-btn:hover:not(.active) {
+            background-color: #374151;
+        }
+
+        .pagination-btn.active {
+            background-color: #ef4444;
+            cursor: default;
+        }
+
+        /* Стили для кнопок платформ */
+        .platform-btn {
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .platform-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Адаптивные стили для модальных окон */
+        @media (max-width: 640px) {
+            .modal-content {
+                width: 95%;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- New Header -->
+    <header class="fixed-menu">
+        <div class="menu-container">
+            <div class="logo-wrapper">
+                <a href="index.html" class="logo-link">
+                    <span class="logo-text">MATRIX</span>
+                    <span class="logo-subtext">Сервисный центр</span>
+                </a>
+            </div>
+            
+            <nav class="desktop-nav">
+                <a href="index.html" class="nav-link">Главная</a>
+                <a href="yslygi.html" class="nav-link">Услуги</a>
+                <a href="onas.html" class="nav-link">О нас</a>
+                <a href="otsv.html" class="nav-link">Отзывы</a>
+                <a href="kontakt.html" class="nav-link">Контакты</a>
+            </nav>
+            
+            <div class="menu-actions">
+                <a href="zakaz.html" class="order-btn">
+                    Заказать ремонт
+                </a>
+                <button class="callback-btn">
+                    Заказать звонок
+                </button>
+                <button class="mobile-menu-btn" id="mobile-menu-button">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobile-menu">
+            <div class="mobile-menu-content">
+                <a href="index.html" class="mobile-nav-link">Главная</a>
+                <a href="yslygi.html" class="mobile-nav-link">Услуги</a>
+                <a href="onas.html" class="mobile-nav-link">О нас</a>
+                <a href="otsv.html" class="mobile-nav-link">Отзывы</a>
+                <a href="kontakt.html" class="mobile-nav-link">Контакты</a>
+                <a href="zakaz.html" class="mobile-order-btn">
+                    Заказать ремонт
+                </a>
+                <button class="mobile-callback-btn">
+                    Заказать звонок
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Главный баннер -->
+    <section class="particles-bg relative py-20 px-6">
+        <div id="particles-js" class="absolute inset-0"></div>
+        <div class="container mx-auto text-center relative z-10">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4 animate-slide-in">Отзывы наших клиентов</h1>
+            <p class="text-xl md:text-2xl opacity-80 mb-8 animate-slide-in" style="animation-delay: 0.2s;">Реальные мнения о качестве нашего сервиса</p>
+        </div>
+    </section>
+
+    <!-- Фильтр отзывов -->
+    <section class="py-12 bg-gray-900 px-6">
+        <div class="container mx-auto">
+            <div class="flex flex-wrap justify-center gap-3 mb-12">
+                <button class="filter-btn bg-red-600 text-white px-6 py-2 rounded-full font-medium" data-filter="all">Все</button>
+                <button class="filter-btn bg-gray-800 hover:bg-gray-700 text-white px-6 py-2 rounded-full font-medium" data-filter="phone">Телефоны</button>
+                <button class="filter-btn bg-gray-800 hover:bg-gray-700 text-white px-6 py-2 rounded-full font-medium" data-filter="laptop">Ноутбуки</button>
+                <button class="filter-btn bg-gray-800 hover:bg-gray-700 text-white px-6 py-2 rounded-full font-medium" data-filter="tablet">Планшеты</button>
+                <button class="filter-btn bg-gray-800 hover:bg-gray-700 text-white px-6 py-2 rounded-full font-medium" data-filter="other">Другое</button>
+            </div>
+            
+            <!-- Сортировка -->
+            <div class="flex justify-end mb-8">
+                <div class="flex items-center">
+                    <span class="mr-2">Сортировать:</span>
+                    <select id="sort-select" class="bg-gray-800 text-white px-4 py-2 rounded">
+                        <option value="date-new">По дате (новые)</option>
+                        <option value="date-old">По дате (старые)</option>
+                        <option value="rating-high">По рейтингу (высокий)</option>
+                        <option value="rating-low">По рейтингу (низкий)</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Блок отзывов -->
+            <div class="testimonial-slider">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="reviews-container">
+                    <!-- Отзыв 1 -->
+                    <div class="testimonial-card bg-gray-800 rounded-lg p-6 card-hover fade-in best-review" data-category="phone" data-date="2024-05-20" data-rating="5">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center text-white font-bold mr-4">А</div>
+                            <div>
+                                <h3 class="font-bold">Анна</h3>
+                                <p class="text-gray-400 text-sm">20.05.2024</p>
+                            </div>
+                        </div>
+                        <div class="flex mb-3">
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                        </div>
+                        <p class="mb-4">Отличный сервис! Починили экран iPhone 12 за 1 день, хотя в другом сервисе сказали, что нужно менять весь модуль. Цены адекватные, персонал вежливый. Обязательно вернусь снова!</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-400 text-sm"><i class="fas fa-mobile-alt mr-1"></i> iPhone 12</span>
+                            <div class="flex items-center">
+                                <button class="like-btn text-gray-400 hover:text-red-500 mr-2"><i class="far fa-heart"></i></button>
+                                <span class="likes-count text-sm">24</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Отзыв 2 -->
+                    <div class="testimonial-card bg-gray-800 rounded-lg p-6 card-hover fade-in" data-category="laptop" data-date="2024-05-18" data-rating="4">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold mr-4">И</div>
+                            <div>
+                                <h3 class="font-bold">Иван</h3>
+                                <p class="text-gray-400 text-sm">18.05.2024</p>
+                            </div>
+                        </div>
+                        <div class="flex mb-3">
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star"></i>
+                        </div>
+                        <p class="mb-4">Чистили ноутбук от пыли и меняли термопасту. Работа сделана качественно, но пришлось ждать дольше обещанного. В целом впечатление положительное, цена адекватная.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-400 text-sm"><i class="fas fa-laptop mr-1"></i> ASUS ROG Strix</span>
+                            <div class="flex items-center">
+                                <button class="like-btn text-gray-400 hover:text-red-500 mr-2"><i class="far fa-heart"></i></button>
+                                <span class="likes-count text-sm">12</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Отзыв 3 -->
+                    <div class="testimonial-card bg-gray-800 rounded-lg p-6 card-hover fade-in" data-category="tablet" data-date="2024-05-15" data-rating="5">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center text-white font-bold mr-4">Е</div>
+                            <div>
+                                <h3 class="font-bold">Елена</h3>
+                                <p class="text-gray-400 text-sm">15.05.2024</p>
+                            </div>
+                        </div>
+                        <div class="flex mb-3">
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                        </div>
+                        <p class="mb-4">Заменяли батарею в iPad Air. Сделали очень быстро, всего за 2 часа. Даже не ожидала такого сервиса. Персонал приветливый, объяснили все нюансы. Рекомендую!</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-400 text-sm"><i class="fas fa-tablet mr-1"></i> iPad Air 3</span>
+                            <div class="flex items-center">
+                                <button class="like-btn text-gray-400 hover:text-red-500 mr-2"><i class="far fa-heart"></i></button>
+                                <span class="likes-count text-sm">18</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Отзыв 4 -->
+                    <div class="testimonial-card bg-gray-800 rounded-lg p-6 card-hover fade-in" data-category="other" data-date="2024-05-12" data-rating="4">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold mr-4">Д</div>
+                            <div>
+                                <h3 class="font-bold">Дмитрий</h3>
+                                <p class="text-gray-400 text-sm">12.05.2024</p>
+                            </div>
+                        </div>
+                        <div class="flex mb-3">
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star"></i>
+                        </div>
+                        <p class="mb-4">Ремонтировали игровую консоль. Проблема была сложная, но мастера справились. Единственное - запчасти пришлось ждать неделю. В остальном все отлично, цена соответствовала сложности работы.</p>
+                            <div class="flex justify-between items-center">
+                            <span class="text-gray-400 text-sm"><i class="fas fa-gamepad mr-1"></i> PlayStation 5</span>
+                            <div class="flex items-center">
+                                <button class="like-btn text-gray-400 hover:text-red-500 mr-2"><i class="far fa-heart"></i></button>
+                                <span class="likes-count text-sm">8</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Отзыв 5 -->
+                    <div class="testimonial-card bg-gray-800 rounded-lg p-6 card-hover fade-in" data-category="phone" data-date="2024-05-10" data-rating="5">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-yellow-600 rounded-full flex items-center justify-center text-white font-bold mr-4">О</div>
+                            <div>
+                                <h3 class="font-bold">Ольга</h3>
+                                <p class="text-gray-400 text-sm">10.05.2024</p>
+                            </div>
+                        </div>
+                        <div class="flex mb-3">
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                        </div>
+                        <p class="mb-4">Заменяли разъем зарядки в Samsung Galaxy. Сделали за час, пока я пила кофе в соседнем кафе. Очень удобно, что можно подождать рядом. Цена ниже, чем в официальном сервисе, а качество на высоте.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-400 text-sm"><i class="fas fa-mobile-alt mr-1"></i> Samsung Galaxy S21</span>
+                            <div class="flex items-center">
+                                <button class="like-btn text-gray-400 hover:text-red-500 mr-2"><i class="far fa-heart"></i></button>
+                                <span class="likes-count text-sm">15</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Отзыв 6 -->
+                    <div class="testimonial-card bg-gray-800 rounded-lg p-6 card-hover fade-in" data-category="laptop" data-date="2024-05-08" data-rating="3">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-pink-600 rounded-full flex items-center justify-center text-white font-bold mr-4">С</div>
+                            <div>
+                                <h3 class="font-bold">Сергей</h3>
+                                <p class="text-gray-400 text-sm">08.05.2024</p>
+                            </div>
+                        </div>
+                        <div class="flex mb-3">
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star active"></i>
+                            <i class="fas fa-star rating-star"></i>
+                            <i class="fas fa-star rating-star"></i>
+                        </div>
+                        <p class="mb-4">Ремонтировали материнскую плату ноутбука. В целом все нормально, но пришлось заказывать запчасть, что заняло дополнительное время. Персонал вежливый, но сроки ремонта могли бы быть точнее.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-400 text-sm"><i class="fas fa-laptop mr-1"></i> HP Pavilion</span>
+                            <div class="flex items-center">
+                                <button class="like-btn text-gray-400 hover:text-red-500 mr-2"><i class="far fa-heart"></i></button>
+                                <span class="likes-count text-sm">5</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hidden" id="reviews-page-2">
+                <!-- Отзыв 7 -->
+                <div class="testimonial-card bg-gray-800 rounded-lg p-6 card-hover fade-in" data-category="phone" data-date="2024-05-05" data-rating="5">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-indigo-600 rounded-full flex items-center justify-center text-white font-bold mr-4">М</div>
+                        <div>
+                            <h3 class="font-bold">Михаил</h3>
+                            <p class="text-gray-400 text-sm">05.05.2024</p>
+                        </div>
+                    </div>
+                    <div class="flex mb-3">
+                        <i class="fas fa-star rating-star active"></i>
+                        <i class="fas fa-star rating-star active"></i>
+                        <i class="fas fa-star rating-star active"></i>
+                        <i class="fas fa-star rating-star active"></i>
+                        <i class="fas fa-star rating-star active"></i>
+                    </div>
+                    <p class="mb-4">Ремонтировали разбитый экран на Xiaomi. Сделали все быстро и качественно, цена приятно удивила. Персонал вежливый, объяснили все нюансы ремонта. Буду рекомендовать!</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-400 text-sm"><i class="fas fa-mobile-alt mr-1"></i> Xiaomi Redmi Note 10</span>
+                        <div class="flex items-center">
+                            <button class="like-btn text-gray-400 hover:text-red-500 mr-2"><i class="far fa-heart"></i></button>
+                            <span class="likes-count text-sm">10</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Отзыв 8 -->
+                <div class="testimonial-card bg-gray-800 rounded-lg p-6 card-hover fade-in best-review" data-category="laptop" data-date="2024-05-03" data-rating="5">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-teal-600 rounded-full flex items-center justify-center text-white font-bold mr-4">К</div>
+                        <div>
+                            <h3 class="font-bold">Кирилл</h3>
+                            <p class="text-gray-400 text-sm">03.05.2024</p>
+                        </div>
+                    </div>
+                    <div class="flex mb-3">
+                        <i class="fas fa-star rating-star active"></i>
+                        <i class="fas fa-star rating-star active"></i>
+                        <i class="fas fa-star rating-star active"></i>
+                        <i class="fas fa-star rating-star active"></i>
+                        <i class="fas fa-star rating-star active"></i>
+                    </div>
+                    <p class="mb-4">Чинили ноутбук после залития. Спасли данные и восстановили работоспособность. Мастер настоящий профессионал, видно что с опытом. Сервис на высшем уровне!</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-400 text-sm"><i class="fas fa-laptop mr-1"></i> Lenovo ThinkPad</span>
+                        <div class="flex items-center">
+                            <button class="like-btn text-gray-400 hover:text-red-500 mr-2"><i class="far fa-heart"></i></button>
+                            <span class="likes-count text-sm">22</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Отзыв 9 -->
+                <div class="testimonial-card bg-gray-800 rounded-lg p-6 card-hover fade-in" data-category="tablet" data-date="2024-04-28" data-rating="4">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-orange-600 rounded-full flex items-center justify-center text-white font-bold mr-4">Т</div>
+                        <div>
+                            <h3 class="font-bold">Татьяна</h3>
+                            <p class="text-gray-400 text-sm">28.04.2024</p>
+                        </div>
+                    </div>
+                    <div class="flex mb-3">
+                        <i class="fas fa-star rating-star active"></i>
+                        <i class="fas fa-star rating-star active"></i>
+                        <i class="fas fa-star rating-star active"></i>
+                        <i class="fas fa-star rating-star active"></i>
+                        <i class="fas fa-star rating-star"></i>
+                    </div>
+                    <p class="mb-4">Заменяли экран на планшете. Сделали быстро, но немного дороже чем ожидала. В целом качеством довольна, но цена могла бы быть ниже.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-400 text-sm"><i class="fas fa-tablet mr-1"></i> Samsung Galaxy Tab</span>
+                        <div class="flex items-center">
+                            <button class="like-btn text-gray-400 hover:text-red-500 mr-2"><i class="far fa-heart"></i></button>
+                            <span class="likes-count text-sm">7</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Отзыв 10 -->
+                <div class="testimonial-card bg-gray-800 rounded-lg p-6 card-hover fade-in" data-category="other" data-date="2024-04-25" data-rating="5">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold mr-4">А</div>
+                        <div>
+                            <h3 class="font-bold">Александр</h3>
+                            <p class="text-gray-400 text-sm">25.04.2024</p>
+                        </div>
+                    </div>
+                    <div class="flex mb-3">
+                        <i class="fas fa-star rating-star active"></i>
+                        <i class="fas fa-star rating-star active"></i>
+                        <i class="fas fa-star rating-star active"></i>
+                        <i class="fas fa-star rating-star active"></i>
+                        <i class="fas fa-star rating-star active"></i>
+                    </div>
+                    <p class="mb-4">Ремонтировали игровой контроллер. Проблема была нестандартная, но мастера нашли решение. Отличный сервис, индивидуальный подход. Рекомендую!</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-400 text-sm"><i class="fas fa-gamepad mr-1"></i> Xbox Controller</span>
+                        <div class="flex items-center">
+                            <button class="like-btn text-gray-400 hover:text-red-500 mr-2"><i class="far fa-heart"></i></button>
+                            <span class="likes-count text-sm">14</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Отзыв 11 -->
+                <div class="testimonial-card bg-gray-800 rounded-lg p-6 card-hover fade-in" data-category="phone" data-date="2024-04-20" data-rating="4">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-pink-600 rounded-full flex items-center justify-center text-white font-bold mr-4">Н</div>
+                        <div>
+                            <h3 class="font-bold">Наталья</h3>
+                            <p class="text-gray-400 text-sm">20.04.2024</p>
+                        </div>
+                    </div>
+                    <div class="flex mb-3">
+                        <i class="fas fa-star rating-star active"></i>
+                        <i class="fas fa-star rating-star active"></i>
+                        <i class="fas fa-star rating-star active"></i>
+                        <i class="fas fa-star rating-star active"></i>
+                        <i class="fas fa-star rating-star"></i>
+                    </div>
+                    <p class="mb-4">Меняли батарею в телефоне. Сделали быстро, но забыли позвонить когда готово, пришлось звонить самому. В остальном все хорошо, телефон работает отлично.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-400 text-sm"><i class="fas fa-mobile-alt mr-1"></i> Huawei P30</span>
+                        <div class="flex items-center">
+                            <button class="like-btn text-gray-400 hover:text-red-500 mr-2"><i class="far fa-heart"></i></button>
+                            <span class="likes-count text-sm">9</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Отзыв 12 -->
+                <div class="testimonial-card bg-gray-800 rounded-lg p-6 card-hover fade-in" data-category="laptop" data-date="2024-04-15" data-rating="5">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center text-white font-bold mr-4">П</div>
+                        <div>
+                            <h3 class="font-bold">Павел</h3>
+                            <p class="text-gray-400 text-sm">15.04.2024</p>
+                        </div>
+                    </div>
+                    <div class="flex mb-3">
+                        <i class="fas fa-star rating-star active"></i>
+                        <i class="fas fa-star rating-star active"></i>
+                        <i class="fas fa-star rating-star active"></i>
+                        <i class="fas fa-star rating-star active"></i>
+                        <i class="fas fa-star rating-star active"></i>
+                    </div>
+                    <p class="mb-4">Чинили ноутбук после падения. Заменили матрицу и починили корпус. Работа сделана идеально, даже не видно что был ремонт. Спасибо за качественную работу!</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-400 text-sm"><i class="fas fa-laptop mr-1"></i> Dell XPS 15</span>
+                        <div class="flex items-center">
+                            <button class="like-btn text-gray-400 hover:text-red-500 mr-2"><i class="far fa-heart"></i></button>
+                            <span class="likes-count text-sm">17</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Пагинация -->
+            <div class="flex justify-center mt-12">
+                <button class="px-4 py-2 bg-gray-800 text-white rounded-l-lg hover:bg-gray-700">Назад</button>
+                <button class="px-4 py-2 bg-red-600 text-white">1</button>
+                <button class="px-4 py-2 bg-gray-800 text-white hover:bg-gray-700">2</button>
+                <button class="px-4 py-2 bg-gray-800 text-white hover:bg-gray-700">3</button>
+                <button class="px-4 py-2 bg-gray-800 text-white rounded-r-lg hover:bg-gray-700">Вперед</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Видео отзывы -->
+    <section class="py-16 px-6 bg-gray-900">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12">О нас говорят</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Видео 1 -->
+                <div class="video-thumbnail rounded-lg overflow-hidden relative" data-video-id="video1">
+                    <img src="https://via.placeholder.com/500x300/222222/ffffff?text=Video+1" alt="Видео отзыв" class="w-full">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-play text-white text-2xl"></i>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                        <h3 class="font-bold">Отзыв о ремонте iPhone</h3>
+                        <p class="text-sm text-gray-300">Анна, 20.05.2024</p>
+                    </div>
+                </div>
+                
+                <!-- Видео 2 -->
+                <div class="video-thumbnail rounded-lg overflow-hidden relative" data-video-id="video2">
+                    <img src="https://via.placeholder.com/500x300/222222/ffffff?text=Video+2" alt="Видео отзыв" class="w-full">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-play text-white text-2xl"></i>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                        <h3 class="font-bold">Ремонт ноутбука ASUS</h3>
+                        <p class="text-sm text-gray-300">Иван, 18.05.2024</p>
+                    </div>
+                </div>
+                
+                <!-- Видео 3 -->
+                <div class="video-thumbnail rounded-lg overflow-hidden relative" data-video-id="video3">
+                    <img src="https://via.placeholder.com/500x300/222222/ffffff?text=Video+3" alt="Видео отзыв" class="w-full">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-play text-white text-2xl"></i>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                        <h3 class="font-bold">Замена батареи iPad</h3>
+                        <p class="text-sm text-gray-300">Елена, 15.05.2024</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <button class="btn-glow bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-full font-medium">
+                    <i class="fas fa-video mr-2"></i> Добавить видеоотзыв
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Форма для отзыва -->
+    <section class="py-16 px-6 bg-gray-800">
+        <div class="container mx-auto max-w-4xl">
+            <h2 class="text-3xl font-bold text-center mb-12">Оставьте свой отзыв</h2>
+            
+            <form id="review-form" class="bg-gray-900 rounded-lg p-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="name" class="block mb-2">Ваше имя*</label>
+                        <input type="text" id="name" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:border-red-500" required>
+                        <p class="text-red-500 text-sm mt-1 hidden" id="name-error">Пожалуйста, введите ваше имя</p>
+                    </div>
+                    <div>
+                        <label for="email" class="block mb-2">Email*</label>
+                        <input type="email" id="email" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:border-red-500" required>
+                        <p class="text-red-500 text-sm mt-1 hidden" id="email-error">Пожалуйста, введите корректный email</p>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <label for="device" class="block mb-2">Устройство*</label>
+                    <input type="text" id="device" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:border-red-500" required>
+                    <p class="text-red-500 text-sm mt-1 hidden" id="device-error">Пожалуйста, укажите устройство</p>
+                </div>
+                
+                <div class="mb-6">
+                    <label for="review-text" class="block mb-2">Текст отзыва*</label>
+                    <textarea id="review-text" rows="5" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:border-red-500" required></textarea>
+                    <p class="text-red-500 text-sm mt-1 hidden" id="text-error">Пожалуйста, напишите отзыв</p>
+                </div>
+                
+                <div class="mb-8">
+                    <label class="block mb-2">Оценка*</label>
+                    <div class="flex items-center" id="rating-stars">
+                        <i class="fas fa-star text-2xl mr-1 cursor-pointer rating-star" data-value="1"></i>
+                        <i class="fas fa-star text-2xl mr-1 cursor-pointer rating-star" data-value="2"></i>
+                        <i class="fas fa-star text-2xl mr-1 cursor-pointer rating-star" data-value="3"></i>
+                        <i class="fas fa-star text-2xl mr-1 cursor-pointer rating-star" data-value="4"></i>
+                        <i class="fas fa-star text-2xl mr-1 cursor-pointer rating-star" data-value="5"></i>
+                    </div>
+                    <input type="hidden" id="rating" value="0" required>
+                    <p class="text-red-500 text-sm mt-1 hidden" id="rating-error">Пожалуйста, поставьте оценку</p>
+                </div>
+                
+                <div class="text-center">
+                    <button type="submit" class="btn-glow bg-red-600 hover:bg-red-700 text-white px-12 py-3 rounded-full font-medium">
+                        Отправить отзыв
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Статистика доверия -->
+    <section class="py-16 px-6 bg-black">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12">Нам доверяют</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="counter-container bg-gray-900 rounded-lg p-8 text-center">
+                    <div class="counter text-5xl font-bold mb-4" data-target="4.9">0</div>
+                    <h3 class="text-xl font-medium">Средний рейтинг</h3>
+                    <p class="text-gray-400 mt-2">из 5 возможных</p>
+                </div>
+                
+                <div class="counter-container bg-gray-900 rounded-lg p-8 text-center">
+                    <div class="counter text-5xl font-bold mb-4" data-target="2587">0</div>
+                    <h3 class="text-xl font-medium">Клиентов рекомендуют</h3>
+                    <p class="text-gray-400 mt-2">наши услуги</p>
+                </div>
+                
+                <div class="counter-container bg-gray-900 rounded-lg p-8 text-center">
+                    <div class="counter text-5xl font-bold mb-4" data-target="2000">0</div>
+                    <h3 class="text-xl font-medium">Отзывов за 2025 год</h3>
+                    <p class="text-gray-400 mt-2">и их количество растет</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Призыв к действию -->
+    <section class="py-16 px-6 bg-red-600">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-6">Оставьте свой отзыв и получите скидку 5% на следующий ремонт!</h2>
+            <p class="text-xl mb-8">Ваше мнение важно для нас и помогает становиться лучше</p>
+            <button class="bg-black hover:bg-gray-900 text-white px-12 py-3 rounded-full font-medium">
+                Написать отзыв
+            </button>
+        </div>
+    </section>
+
+    <!-- Подвал сайта -->
+    <footer class="bg-black py-12 px-6">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="text-3xl font-bold neon-text mb-4">MATRIX</div>
+                    <p class="text-gray-400">Сервисный центр по ремонту цифровой техники с 2010 года.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Контакты</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center text-gray-400"><i class="fas fa-map-marker-alt mr-2 text-red-600"></i> г. Смоленск, пр. Строителей, 7Б</li>
+                        <li class="flex items-center text-gray-400"><i class="fas fa-phone mr-2 text-red-600"></i> +7 (904) 364-48-13</li>
+                        <li class="flex items-center text-gray-400"><i class="fas fa-map-marker-alt mr-2 text-red-600"></i> д. Новосельцы, ул. Юбилейная, 16</li>
+                        <li class="flex items-center text-gray-400"><i class="fas fa-phone mr-2 text-red-600"></i> +7 (900) 219-02-70</li>
+                        <li class="flex items-center text-gray-400"><i class="fas fa-envelope mr-2 text-red-600"></i> mmatrix_repair@mail.ru</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Часы работы</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>Пн-Сб: 10:00 - 19:00</li>
+                        <li>Вс: выходной</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Мы в соцсетях</h3>
+                    <div class="flex space-x-4">
+                        <a href="https://vk.com/matrix_repair" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700"><i class="fab fa-vk"></i></a>
+                        <a href="https://t.me/MatrixService_bot" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700"><i class="fab fa-telegram"></i></a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+                <p>© 2024 Сервисный центр Matrix. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Модальное окно для видео -->
+    <div class="modal" id="video-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="aspect-w-16 aspect-h-9">
+                <iframe id="video-frame" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для выбора платформы отзыва -->
+    <div class="modal" id="review-platform-modal">
+        <div class="modal-content bg-gray-900 rounded-lg p-8 max-w-md">
+            <span class="close-modal">&times;</span>
+            <h3 class="text-2xl font-bold mb-6 text-center">Где вы хотите оставить отзыв?</h3>
+            
+            <div class="grid grid-cols-1 gap-4">
+                <a href="#" class="platform-btn bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg flex items-center justify-center">
+                    <i class="fab fa-google mr-2"></i> Google Отзывы
+                </a>
+                
+                <a href="#" class="platform-btn bg-yellow-500 hover:bg-yellow-600 text-gray-900 px-6 py-3 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-star mr-2"></i> Яндекс.Карты
+                </a>
+                
+                <a href="#" class="platform-btn bg-violet-600 hover:bg-violet-700 text-white px-6 py-3 rounded-lg flex items-center justify-center">
+                    <i class="fab fa-vk mr-2"></i> ВКонтакте
+                </a>
+                
+                <a href="#" class="platform-btn bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg flex items-center justify-center">
+                    <i class="fab fa-telegram mr-2"></i> Telegram
+                </a>
+                
+                <a href="#" class="platform-btn bg-gray-800 hover:bg-gray-700 text-white px-6 py-3 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-envelope mr-2"></i> Написать нам
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно заявки на отзыв -->
+    <div class="modal" id="review-request-modal">
+        <div class="modal-content bg-gray-900 rounded-lg p-8 max-w-md">
+            <span class="close-modal">&times;</span>
+            <h3 class="text-2xl font-bold mb-2 text-center">Оставить отзыв</h3>
+            <p class="text-gray-400 text-center mb-6">Мы будем рады вашему мнению о нашей работе</p>
+            
+            <form id="review-request-form">
+                <div class="mb-4">
+                    <label for="request-name" class="block mb-2">Ваше имя*</label>
+                    <input type="text" id="request-name" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:border-red-500" required>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="request-phone" class="block mb-2">Телефон*</label>
+                    <input type="tel" id="request-phone" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:border-red-500" required>
+                </div>
+                
+                <div class="mb-6">
+                    <label for="request-device" class="block mb-2">Какое устройство ремонтировали?</label>
+                    <input type="text" id="request-device" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:border-red-500">
+                </div>
+                
+                <div class="text-center">
+                    <button type="submit" class="btn-glow bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-full font-medium w-full">
+                        Отправить заявку
+                    </button>
+                </div>
+            </form>
+            
+            <div class="mt-6 text-center">
+                <p class="text-gray-400 text-sm">После отправки заявки мы свяжемся с вами и поможем оставить отзыв</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Скрипты -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        // Инициализация частиц
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenuButton.classList.toggle('open');
+                mobileMenu.classList.toggle('flex');
+                mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
+            });
+
+            if (document.getElementById('particles-js')) {
+                particlesJS('particles-js', {
+                    "particles": {
+                        "number": {
+                            "value": 80,
+                            "density": {
+                                "enable": true,
+                                "value_area": 800
+                            }
+                        },
+                        "color": {
+                            "value": "#ff0000"
+                        },
+                        "shape": {
+                            "type": "circle",
+                            "stroke": {
+                                "width": 0,
+                                "color": "#000000"
+                            },
+                            "polygon": {
+                                "nb_sides": 5
+                            }
+                        },
+                        "opacity": {
+                            "value": 0.5,
+                            "random": false,
+                            "anim": {
+                                "enable": false,
+                                "speed": 1,
+                                "opacity_min": 0.1,
+                                "sync": false
+                            }
+                        },
+                        "size": {
+                            "value": 3,
+                            "random": true,
+                            "anim": {
+                                "enable": false,
+                                "speed": 40,
+                                "size_min": 0.1,
+                                "sync": false
+                            }
+                        },
+                        "line_linked": {
+                            "enable": true,
+                            "distance": 150,
+                            "color": "#ff0000",
+                            "opacity": 0.4,
+                            "width": 1
+                        },
+                        "move": {
+                            "enable": true,
+                            "speed": 2,
+                            "direction": "none",
+                            "random": false,
+                            "straight": false,
+                            "out_mode": "out",
+                            "bounce": false,
+                            "attract": {
+                                "enable": false,
+                                "rotateX": 600,
+                                "rotateY": 1200
+                            }
+                        }
+                    },
+                    "interactivity": {
+                        "detect_on": "canvas",
+                        "events": {
+                            "onhover": {
+                                "enable": true,
+                                "mode": "grab"
+                            },
+                            "onclick": {
+                                "enable": true,
+                                "mode": "push"
+                            },
+                            "resize": true
+                        },
+                        "modes": {
+                            "grab": {
+                                "distance": 140,
+                                "line_linked": {
+                                    "opacity": 1
+                                }
+                            },
+                            "bubble": {
+                                "distance": 400,
+                                "size": 40,
+                                "duration": 2,
+                                "opacity": 8,
+                                "speed": 3
+                            },
+                            "repulse": {
+                                "distance": 200,
+                                "duration": 0.4
+                            },
+                            "push": {
+                                "particles_nb": 4
+                            },
+                            "remove": {
+                                "particles_nb": 2
+                            }
+                        }
+                    },
+                    "retina_detect": true
+                });
+            }
+            
+            // Анимация появления элементов при скролле
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            const fadeInOnScroll = () => {
+                fadeElements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+                    
+                    if (elementTop < windowHeight - 100) {
+                        element.classList.add('visible');
+                    }
+                });
+            };
+            
+            window.addEventListener('scroll', fadeInOnScroll);
+            window.addEventListener('load', fadeInOnScroll);
+            
+            // Фильтрация отзывов
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const testimonialCards = document.querySelectorAll('.testimonial-card');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Убираем активный класс у всех кнопок
+                    filterButtons.forEach(btn => {
+                        btn.classList.remove('bg-red-600');
+                        btn.classList.add('bg-gray-800', 'hover:bg-gray-700');
+                    });
+                    
+                    // Добавляем активный класс к текущей кнопке
+                    button.classList.add('bg-red-600');
+                    button.classList.remove('bg-gray-800', 'hover:bg-gray-700');
+                    
+                    const filter = button.getAttribute('data-filter');
+                    
+                    testimonialCards.forEach(card => {
+                        if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // Сортировка отзывов
+            const sortSelect = document.getElementById('sort-select');
+            const reviewsContainer = document.getElementById('reviews-container');
+            
+            sortSelect.addEventListener('change', () => {
+                const sortValue = sortSelect.value;
+                const cards = Array.from(testimonialCards);
+                
+                cards.sort((a, b) => {
+                    if (sortValue === 'date-new') {
+                        return new Date(b.getAttribute('data-date')) - new Date(a.getAttribute('data-date'));
+                    } else if (sortValue === 'date-old') {
+                        return new Date(a.getAttribute('data-date')) - new Date(b.getAttribute('data-date'));
+                    } else if (sortValue === 'rating-high') {
+                        return parseInt(b.getAttribute('data-rating')) - parseInt(a.getAttribute('data-rating'));
+                    } else if (sortValue === 'rating-low') {
+                        return parseInt(a.getAttribute('data-rating')) - parseInt(b.getAttribute('data-rating'));
+                    }
+                    return 0;
+                });
+                
+                // Очищаем контейнер и добавляем отсортированные карточки
+                reviewsContainer.innerHTML = '';
+                cards.forEach(card => {
+                    reviewsContainer.appendChild(card);
+                });
+            });
+            
+            // Лайки на отзывы
+            const likeButtons = document.querySelectorAll('.like-btn');
+            
+            likeButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const likesCount = button.nextElementSibling;
+                    let count = parseInt(likesCount.textContent);
+                    
+                    if (button.querySelector('i').classList.contains('far')) {
+                        button.innerHTML = '<i class="fas fa-heart text-red-500"></i>';
+                        count++;
+                    } else {
+                        button.innerHTML = '<i class="far fa-heart"></i>';
+                        count--;
+                    }
+                    
+                    likesCount.textContent = count;
+                });
+            });
+            
+            // Рейтинг звездами в форме
+            const ratingStars = document.querySelectorAll('#rating-stars .rating-star');
+            const ratingInput = document.getElementById('rating');
+            
+            ratingStars.forEach(star => {
+                star.addEventListener('click', () => {
+                    const value = parseInt(star.getAttribute('data-value'));
+                    ratingInput.value = value;
+                    
+                    // Обновляем отображение звезд
+                    ratingStars.forEach((s, index) => {
+                        if (index < value) {
+                            s.classList.add('active');
+                        } else {
+                            s.classList.remove('active');
+                        }
+                    });
+                });
+                
+                star.addEventListener('mouseover', () => {
+                    const value = parseInt(star.getAttribute('data-value'));
+                    
+                    ratingStars.forEach((s, index) => {
+                        if (index < value) {
+                            s.classList.add('hover');
+                        } else {
+                            s.classList.remove('hover');
+                        }
+                    });
+                });
+                
+                star.addEventListener('mouseout', () => {
+                    ratingStars.forEach(s => {
+                        s.classList.remove('hover');
+                    });
+                    
+                    // Восстанавливаем выбранный рейтинг
+                    const currentRating = parseInt(ratingInput.value);
+                    ratingStars.forEach((s, index) => {
+                        if (index < currentRating) {
+                            s.classList.add('active');
+                        } else {
+                            s.classList.remove('active');
+                        }
+                    });
+                });
+            });
+            
+            // Валидация формы
+            const reviewForm = document.getElementById('review-form');
+            
+            reviewForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                let isValid = true;
+                
+                // Проверка имени
+                const name = document.getElementById('name');
+                const nameError = document.getElementById('name-error');
+                if (name.value.trim() === '') {
+                    name.classList.add('border-red-500');
+                    nameError.classList.remove('hidden');
+                    isValid = false;
+                } else {
+                    name.classList.remove('border-red-500');
+                    nameError.classList.add('hidden');
+                }
+                
+                // Проверка email
+                const email = document.getElementById('email');
+                const emailError = document.getElementById('email-error');
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email.value)) {
+                    email.classList.add('border-red-500');
+                    emailError.classList.remove('hidden');
+                    isValid = false;
+                } else {
+                    email.classList.remove('border-red-500');
+                    emailError.classList.add('hidden');
+                }
+                
+                // Проверка устройства
+                const device = document.getElementById('device');
+                const deviceError = document.getElementById('device-error');
+                if (device.value.trim() === '') {
+                    device.classList.add('border-red-500');
+                    deviceError.classList.remove('hidden');
+                    isValid = false;
+                } else {
+                    device.classList.remove('border-red-500');
+                    deviceError.classList.add('hidden');
+                }
+                
+                // Проверка текста отзыва
+                const reviewText = document.getElementById('review-text');
+                const textError = document.getElementById('text-error');
+                if (reviewText.value.trim() === '') {
+                    reviewText.classList.add('border-red-500');
+                    textError.classList.remove('hidden');
+                    isValid = false;
+                } else {
+                    reviewText.classList.remove('border-red-500');
+                    textError.classList.add('hidden');
+                }
+                
+                // Проверка рейтинга
+                const rating = document.getElementById('rating');
+                const ratingError = document.getElementById('rating-error');
+                if (rating.value === '0') {
+                    ratingError.classList.remove('hidden');
+                    isValid = false;
+                } else {
+                    ratingError.classList.add('hidden');
+                }
+                
+                if (isValid) {
+                    // Здесь можно отправить форму
+                    alert('Спасибо за ваш отзыв! Он будет опубликован после модерации.');
+                    reviewForm.reset();
+                    ratingInput.value = '0';
+                    ratingStars.forEach(star => {
+                        star.classList.remove('active');
+                    });
+                }
+            });
+            
+            // Модальное окно для видео
+            const videoThumbnails = document.querySelectorAll('.video-thumbnail');
+            const videoModal = document.getElementById('video-modal');
+            const videoFrame = document.getElementById('video-frame');
+            const closeModal = document.querySelector('.close-modal');
+            
+            videoThumbnails.forEach(thumbnail => {
+                thumbnail.addEventListener('click', () => {
+                    const videoId = thumbnail.getAttribute('data-video-id');
+                    // В реальном проекте здесь будет ссылка на видео
+                    videoFrame.src = `https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1`;
+                    videoModal.style.display = 'flex';
+                });
+            });
+            
+            closeModal.addEventListener('click', () => {
+                videoFrame.src = '';
+                videoModal.style.display = 'none';
+            });
+            
+            window.addEventListener('click', (e) => {
+                if (e.target === videoModal) {
+                    videoFrame.src = '';
+                    videoModal.style.display = 'none';
+                }
+            });
+            
+            // Анимация счетчиков
+            const counters = document.querySelectorAll('.counter');
+            const speed = 200;
+            
+            function animateCounters() {
+                counters.forEach(counter => {
+                    const target = +counter.getAttribute('data-target');
+                    const count = +counter.innerText;
+                    const increment = target / speed;
+                    
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + increment);
+                        setTimeout(animateCounters, 1);
+                    } else {
+                        counter.innerText = target;
+                    }
+                });
+            }
+            
+            // Запускаем анимацию счетчиков при появлении в области видимости
+            const counterSection = document.querySelector('.counter-container').parentElement.parentElement;
+            
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) {
+                    animateCounters();
+                    observer.unobserve(counterSection);
+                }
+            });
+            
+            observer.observe(counterSection);
+
+            // Модальное окно для выбора платформы отзыва
+            const reviewPlatformModal = document.getElementById('review-platform-modal');
+            const reviewRequestModal = document.getElementById('review-request-modal');
+            const writeReviewBtns = document.querySelectorAll('.write-review-btn, .bg-black.hover\\:bg-gray-900');
+
+            writeReviewBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    reviewPlatformModal.style.display = 'flex';
+                });
+            });
+
+            // Обработчик для кнопки "Добавить видеоотзыв"
+            document.querySelector('.btn-glow.bg-red-600').addEventListener('click', (e) => {
+                e.preventDefault();
+                reviewRequestModal.style.display = 'flex';
+            });
+
+            // Обработчик формы заявки на отзыв
+            document.getElementById('review-request-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const formData = {
+                    name: document.getElementById('request-name').value,
+                    phone: document.getElementById('request-phone').value,
+                    device: document.getElementById('request-device').value
+                };
+                
+                const success = await submitForm(
+                    '/api/review-request',
+                    formData,
+                    'Спасибо за заявку! Мы свяжемся с вами в ближайшее время для уточнения деталей.'
+                );
+                
+                if (success) {
+                    reviewRequestModal.style.display = 'none';
+                    document.getElementById('review-request-form').reset();
+                }
+            });
+
+            // Закрытие модальных окон
+            document.querySelectorAll('.close-modal').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.modal').forEach(modal => {
+                        modal.style.display = 'none';
+                    });
+                });
+            });
+
+            // Закрытие модальных окон при клике вне их
+            window.addEventListener('click', (e) => {
+                if (e.target.classList.contains('modal')) {
+                    e.target.style.display = 'none';
+                }
+            });
+        });
+
+        // Общая функция для отправки формы
+        async function submitForm(url, data, successMessage) {
+            try {
+                // В реальном проекте здесь будет fetch запрос
+                console.log('Отправка данных:', data);
+                return new Promise(resolve => {
+                    setTimeout(() => {
+                        alert(successMessage);
+                        resolve(true);
+                    }, 500);
+                });
+            } catch (error) {
+                console.error('Ошибка:', error);
+                alert('Произошла ошибка при отправке формы');
+                return false;
+            }
+        }
+    </script>
+</body>
+</html>

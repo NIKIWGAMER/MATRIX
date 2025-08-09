@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix - Контакты сервисного центра</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Orbitron:wght@500;700&display=swap');
+
+        :root {
+            --primary-red: #ff0000;
+            --dark-bg: #111;
+            --neon-glow: 0 0 10px rgba(255, 0, 0, 0.8), 0 0 20px rgba(255, 0, 0, 0.6);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--dark-bg);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: var(--neon-glow);
+            letter-spacing: 2px;
+        }
+
+        .menu-link {
+            position: relative;
+        }
+
+        .menu-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary-red);
+            transition: width 0.3s ease;
+        }
+
+        .menu-link:hover::after {
+            width: 100%;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-red);
+            box-shadow: var(--neon-glow);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.9), 0 0 30px rgba(255, 0, 0, 0.7);
+        }
+
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            padding-top: 100px;
+        }
+
+        .contact-card {
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
+            border-color: var(--primary-red);
+        }
+
+        .contact-icon {
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover .contact-icon {
+            transform: scale(1.1);
+            color: var(--primary-red);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .form-input {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-bottom-color: var(--primary-red);
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .form-input.error {
+            border-bottom-color: var(--primary-red);
+        }
+
+        .map-container {
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(255, 0, 0, 0.3);
+        }
+
+        .map-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 0, 0, 0.1) 0%, transparent 50%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .map-marker {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-red);
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            left: 50%;
+            top: 50%;
+            margin: -20px 0 0 -20px;
+            z-index: 2;
+            box-shadow: var(--neon-glow);
+        }
+
+        .map-marker::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
+            left: 10px;
+            top: 10px;
+            transform: rotate(45deg);
+        }
+
+        .working-hours tr:hover td {
+            background-color: rgba(255, 0, 0, 0.1);
+        }
+
+        .current-day {
+            color: var(--primary-red);
+            font-weight: bold;
+        }
+
+        .social-icon {
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-5px);
+            color: var(--primary-red);
+        }
+
+        .chat-widget {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--neon-glow);
+            cursor: pointer;
+            animation: pulse 2s infinite;
+            z-index: 100;
+        }
+
+        .status-open {
+            color: #00ff00;
+            text-shadow: 0 0 5px rgba(0, 255, 0, 0.7);
+        }
+
+        .status-closed {
+            color: var(--primary-red);
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .typing-effect {
+            border-right: 2px solid var(--primary-red);
+            animation: blink 0.75s step-end infinite;
+        }
+
+        @keyframes blink {
+            from, to { border-color: transparent; }
+            50% { border-color: var(--primary-red); }
+        }
+
+        .qr-code {
+            filter: invert(1);
+            transition: all 0.3s ease;
+        }
+
+        .qr-code:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Menu styles */
+        .fixed-menu {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 50;
+            background-color: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .menu-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0.75rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #e60073, 0 0 20px #e60073;
+        }
+
+        .logo-subtext {
+            margin-left: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 300;
+            color: #d1d5db;
+        }
+
+        /* Desktop navigation */
+        .desktop-nav {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .desktop-nav {
+                display: flex;
+                gap: 2rem;
+            }
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #ef4444;
+        }
+
+        /* Menu buttons */
+        .menu-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .order-btn {
+            display: none;
+            padding: 0.5rem 1.5rem;
+            background-color: #ef4444;
+            color: white;
+            border-radius: 9999px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+        }
+
+        .order-btn:hover {
+            background-color: #dc2626;
+            transform: translateY(-2px);
+        }
+
+        .callback-btn {
+            display: none;
+            padding: 0.5rem 1.5rem;
+            background-color: transparent;
+            border: 2px solid #ef4444;
+            color: #ef4444;
+            border-radius: 9999px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .callback-btn:hover {
+            background-color: #ef4444;
+            color: white;
+        }
+
+        @media (min-width: 768px) {
+            .order-btn, .callback-btn {
+                display: inline-block;
+            }
+        }
+
+        /* Mobile menu button */
+        .mobile-menu-btn {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 2rem;
+            height: 2rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 10;
+        }
+
+        .bar {
+            width: 2rem;
+            height: 0.25rem;
+            background: white;
+            border-radius: 10px;
+            transition: all 0.3s linear;
+            position: relative;
+            transform-origin: 1px;
+        }
+
+        @media (min-width: 768px) {
+            .mobile-menu-btn {
+                display: none;
+            }
+        }
+
+        /* Mobile menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.95);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 5;
+            padding-top: 5rem;
+        }
+
+        .mobile-menu-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 2rem;
+        }
+
+        .mobile-nav-link {
+            color: white;
+            text-decoration: none;
+            font-size: 1.25rem;
+            transition: color 0.3s ease;
+        }
+
+        .mobile-nav-link:hover {
+            color: #ef4444;
+        }
+
+        .mobile-order-btn {
+            display: inline-block;
+            padding: 0.75rem 2rem;
+            background-color: #ef4444;
+            color: white;
+            border-radius: 9999px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+            margin-top: 1rem;
+        }
+
+        .mobile-order-btn:hover {
+            background-color: #dc2626;
+            transform: translateY(-2px);
+        }
+
+        .mobile-callback-btn {
+            padding: 0.75rem 2rem;
+            background-color: transparent;
+            border: 2px solid #ef4444;
+            color: #ef4444;
+            border-radius: 9999px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-callback-btn:hover {
+            background-color: #ef4444;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .contact-cards {
+                grid-template-columns: 1fr !important;
+            }
+            
+            .map-container {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- New Header -->
+    <header class="fixed-menu">
+        <div class="menu-container">
+            <div class="logo-wrapper">
+                <a href="index.html" class="logo-link">
+                    <span class="logo-text">MATRIX</span>
+                    <span class="logo-subtext">Сервисный центр</span>
+                </a>
+            </div>
+            
+            <nav class="desktop-nav">
+                <a href="index.html" class="nav-link">Главная</a>
+                <a href="yslygi.html" class="nav-link">Услуги</a>
+                <a href="onas.html" class="nav-link">О нас</a>
+                <a href="otsv.html" class="nav-link">Отзывы</a>
+                <a href="kontakt.html" class="nav-link">Контакты</a>
+            </nav>
+            
+            <div class="menu-actions">
+                <a href="zakaz.html" class="order-btn">
+                    Заказать ремонт
+                </a>
+                <button class="callback-btn">
+                    Заказать звонок
+                </button>
+                <button class="mobile-menu-btn" id="mobile-menu-button">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobile-menu">
+            <div class="mobile-menu-content">
+                <a href="index.html" class="mobile-nav-link">Главная</a>
+                <a href="yslygi.html" class="mobile-nav-link">Услуги</a>
+                <a href="onas.html" class="mobile-nav-link">О нас</a>
+                <a href="otsv.html" class="mobile-nav-link">Отзывы</a>
+                <a href="kontakt.html" class="mobile-nav-link">Контакты</a>
+                <a href="zakaz.html" class="mobile-order-btn">
+                    Заказать ремонт
+                </a>
+                <button class="mobile-callback-btn">
+                    Заказать звонок
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section py-20 px-6 text-center">
+        <div class="container mx-auto max-w-4xl fade-in">
+            <h1 class="text-5xl md:text-6xl font-bold mb-4 text-white">
+                <span class="text-red-500">Наши</span> контакты
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-300 mb-8">
+                Мы всегда на связи – приходите, звоните, пишите!
+            </p>
+        </div>
+    </section>
+
+    <!-- Contact Info -->
+    <section class="py-16 px-6 bg-gray-900">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold mb-12 text-center text-white fade-in">
+                Как <span class="text-red-500">нас найти</span>
+            </h2>
+            
+            <div class="contact-cards grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                <!-- Address Card -->
+                <div class="contact-card bg-gray-800 p-8 rounded-lg text-center fade-in" style="transition-delay: 0.1s">
+                    <div class="contact-icon text-4xl mb-4 text-red-500">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-white">Адрес</h3>
+                    <p class="text-gray-300 mb-4">
+                        г. Смоленск, пр. Строителей, 7Б
+                    </p>
+                    <p class="text-gray-300 mb-4">
+                        д. Новосельцы, ул. Юбилейная, 16
+                    </p>
+                    <a href="#map" class="text-red-500 hover:underline">Посмотреть на карте</a>
+                </div>
+                
+                <!-- Phone Card -->
+                <div class="contact-card bg-gray-800 p-8 rounded-lg text-center fade-in" style="transition-delay: 0.2s">
+                    <div class="contact-icon text-4xl mb-4 text-red-500">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-white">Телефон</h3>
+                    <p class="text-gray-300 mb-4">
+                        +7 (904) 364-48-13
+                    </p>
+                    <p class="text-gray-300 mb-4">
+                        +7(900)219-02-70
+                    </p>
+                    <a href="tel:+79043644813" class="text-red-500 hover:underline">Позвонить сейчас</a>
+                </div>
+                
+                <!-- Email Card -->
+                <div class="contact-card bg-gray-800 p-8 rounded-lg text-center fade-in" style="transition-delay: 0.3s">
+                    <div class="contact-icon text-4xl mb-4 text-red-500">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-white">Email</h3>
+                    <p class="text-gray-300 mb-4">
+                        mmatrix_repair@mail.ru
+                    </p>
+                    <a href="mailto:mmatrix_repair@mail.ru" class="text-red-500 hover:underline">Написать письмо</a>
+                </div>
+            </div>
+            
+            <!-- QR Code -->
+            <div class="text-center fade-in">
+                <p class="text-gray-400 mb-4">Или отсканируйте QR-код с нашими контактами</p>
+                <div class="inline-block p-2 bg-white rounded">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=MATRIX%20SERVICE%0AПроспект%20Строителей%207Б%20%0AТелефон:%20+7%20(904)%20364-48-13%0AEmail:%20mmatrix_repair@mail.ru" 
+                         alt="QR код с контактами" class="qr-code w-32 h-32">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form and Map -->
+    <section class="py-16 px-6 bg-black">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Contact Form -->
+                <div class="fade-in">
+                    <h2 class="text-3xl font-bold mb-8 text-white">
+                        <span class="text-red-500">Обратная</span> связь
+                    </h2>
+                    
+                    <form id="contactForm" class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-gray-300 mb-2">Ваше имя</label>
+                            <input type="text" id="name" name="name" 
+                                   class="form-input w-full px-4 py-3 rounded bg-gray-800 text-white focus:outline-none" 
+                                   placeholder="Введите ваше имя">
+                            <p class="text-red-500 text-sm mt-1 hidden" id="nameError">Пожалуйста, введите ваше имя</p>
+                        </div>
+                        
+                        <div>
+                            <label for="phone" class="block text-gray-300 mb-2">Телефон</label>
+                            <input type="tel" id="phone" name="phone" 
+                                   class="form-input w-full px-4 py-3 rounded bg-gray-800 text-white focus:outline-none" 
+                                   placeholder="+7 (XXX) XXX-XX-XX">
+                            <p class="text-red-500 text-sm mt-1 hidden" id="phoneError">Пожалуйста, введите корректный номер телефона</p>
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-gray-300 mb-2">Email</label>
+                            <input type="email" id="email" name="email" 
+                                   class="form-input w-full px-4 py-3 rounded bg-gray-800 text-white focus:outline-none" 
+                                   placeholder="your@email.com">
+                            <p class="text-red-500 text-sm mt-1 hidden" id="emailError">Пожалуйста, введите корректный email</p>
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-gray-300 mb-2">Сообщение</label>
+                            <textarea id="message" name="message" rows="5" 
+                                      class="form-input w-full px-4 py-3 rounded bg-gray-800 text-white focus:outline-none" 
+                                      placeholder="Опишите вашу проблему..."></textarea>
+                            <p class="text-red-500 text-sm mt-1 hidden" id="messageError">Пожалуйста, введите ваше сообщение</p>
+                        </div>
+                        
+                        <button type="submit" id="submitBtn" 
+                                class="btn-primary w-full px-6 py-3 rounded-full font-medium text-white flex items-center justify-center">
+                            <span id="submitText">Отправить</span>
+                            <span id="submitSpinner" class="ml-2 hidden">
+                                <i class="fas fa-circle-notch fa-spin"></i>
+                            </span>
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Map -->
+                <div class="fade-in" style="transition-delay: 0.2s" id="map">
+                    <h2 class="text-3xl font-bold mb-8 text-white">
+                        <span class="text-red-500">Карта</span> проезда
+                    </h2>
+                    
+                    <div class="map-container rounded-lg h-full min-h-[400px] relative">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d362.505750738136!2d32.096893803670675!3d54.76646441938989!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46cef62add7f7519%3A0xdd89a9e01799cd88!2z0J_RgNC-0YHQv9C10LrRgiDQodGC0YDQvtC40YLQtdC70LXQuSwgN9CRLCDQodC80L7Qu9C10L3RgdC6LCDQodC80L7Qu9C10L3RgdC60LDRjyDQvtCx0LsuLCAyMTQwMzE!5e0!3m2!1sru!2sru!4v1750303237427!5m2!1sru!2sru" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" class="min-h-[400px] lg:min-h-[600px]" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Working Hours -->
+    <section class="py-16 px-6 bg-gray-900">
+        <div class="container mx-auto max-w-4xl fade-in">
+            <h2 class="text-3xl font-bold mb-8 text-center text-white">
+                <span class="text-red-500">График</span> работы
+            </h2>
+            
+            <div class="bg-gray-800 rounded-lg p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <h3 class="text-xl font-bold text-white">Сервисный центр Matrix</h3>
+                        <p id="statusDisplay" class="text-sm">
+                            <i class="fas fa-circle mr-2"></i>
+                            <span id="statusText">Определение статуса...</span>
+                        </p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-sm text-gray-400">Часовой пояс: Москва</p>
+                    </div>
+                </div>
+                
+                <table class="w-full working-hours">
+                    <tbody>
+                        <tr>
+                            <td class="py-3 px-4 border-b border-gray-700 text-gray-300">Понедельник - Суббота</td>
+                            <td class="py-3 px-4 border-b border-gray-700 text-right font-bold text-white">10:00 – 19:00</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4 text-gray-300">Воскресенье</td>
+                            <td class="py-3 px-4 text-right font-bold text-white">Выходной</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social & CTA -->
+    <section class="py-16 px-6 bg-black">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <!-- Social -->
+                <div class="fade-in">
+                    <h2 class="text-3xl font-bold mb-8 text-white">
+                        <span class="text-red-500">Мы</span> в соцсетях
+                    </h2>
+                    
+                    <div class="flex space-x-6">
+                        <a href="https://t.me/MatrixService_bot" class="social-icon text-3xl text-gray-400 hover:text-blue-500" title="Telegram">
+                            <i class="fab fa-telegram-plane"></i>
+                        </a>
+                        <a href="#" class="social-icon text-3xl text-gray-400 hover:text-green-500" title="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="https://vk.com/matrix_repair" class="social-icon text-3xl text-gray-400 hover:text-blue-400" title="VK">
+                            <i class="fab fa-vk"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- CTA -->
+                <div class="fade-in" style="transition-delay: 0.2s">
+                    <div class="bg-red-900 bg-opacity-30 border border-red-500 rounded-lg p-8 text-center">
+                        <h3 class="text-2xl font-bold mb-4 text-white">Нужна срочная помощь?</h3>
+                        <p class="text-gray-300 mb-6">Звоните прямо сейчас! Наши специалисты готовы помочь вам 24/7</p>
+                        <a href="tel:+79043644813" 
+                           class="btn-primary inline-block px-8 py-3 rounded-full font-bold text-white animate-pulse">
+                            <i class="fas fa-phone-alt mr-2"></i> Позвонить
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-12 px-6">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4 text-white">
+                        <span class="text-red-500">MATRIX</span> SERVICE
+                    </h3>
+                    <p class="text-gray-400">
+                        Профессиональный ремонт техники с 2010 года. Гарантия качества и лучшие цены.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4 text-white">Меню</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-red-500">Главная</a></li>
+                        <li><a href="yslygi.html" class="text-gray-400 hover:text-red-500">Услуги</a></li>
+                        <li><a href="onas.html" class="text-gray-400 hover:text-red-500">О нас</a></li>
+                        <li><a href="otsv.html" class="text-gray-400 hover:text-red-500">Отзывы</a></li>
+                        <li><a href="kontakt.html" class="text-red-500">Контакты</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4 text-white">Контакты</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-2 text-red-500"></i>
+                            г. Смоленск, пр. Строителей, 7Б
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-2 text-red-500"></i>
+                            +7 (904) 364-48-13
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-2 text-red-500"></i>
+                            д. Новосельцы, ул. Юбилейная, 16
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-2 text-red-500"></i>
+                            +7 (900) 219-02-70
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-2 text-red-500"></i>
+                            mmatrix_repair@mail.ru
+                        </li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4 text-white">Подписаться</h4>
+                    <p class="text-gray-400 mb-4">Будьте в курсе наших акций и новостей</p>
+                    <div class="flex">
+                        <input type="email" placeholder="Ваш email" class="px-4 py-2 bg-gray-800 text-white rounded-l focus:outline-none w-full">
+                        <button class="bg-red-500 hover:bg-red-600 text-white px-4 rounded-r">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500">
+                <p>&copy; 2025 MATRIX SERVICE. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chat Widget -->
+    <div class="chat-widget">
+        <i class="fas fa-comment-dots text-white text-2xl"></i>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+        <div class="bg-gray-900 border border-red-500 rounded-lg p-8 max-w-md w-full mx-4">
+            <div class="text-center">
+                <div class="text-green-500 text-5xl mb-4">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-2">Спасибо!</h3>
+                <p class="text-gray-300 mb-6">Ваше сообщение успешно отправлено. Мы свяжемся с вами в ближайшее время.</p>
+                <button id="closeModal" class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-full">
+                    Закрыть
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Скрипты -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu functionality
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const bars = document.querySelectorAll('.bar');
+            
+            // Toggle mobile menu
+            mobileMenuButton.addEventListener('click', function() {
+                const isOpen = mobileMenu.style.display === 'flex';
+                
+                if (isOpen) {
+                    mobileMenu.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                    
+                    // Reset button animation
+                    bars[0].style.transform = 'rotate(0)';
+                    bars[1].style.opacity = '1';
+                    bars[2].style.transform = 'rotate(0)';
+                } else {
+                    mobileMenu.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                    
+                    // Animate button to X
+                    bars[0].style.transform = 'rotate(45deg)';
+                    bars[1].style.opacity = '0';
+                    bars[2].style.transform = 'rotate(-45deg)';
+                }
+            });
+            
+            // Close menu when clicking links
+            const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileMenu.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                    
+                    // Reset button animation
+                    bars[0].style.transform = 'rotate(0)';
+                    bars[1].style.opacity = '1';
+                    bars[2].style.transform = 'rotate(0)';
+                });
+            });
+            
+            // Callback button functionality
+            const callbackButtons = document.querySelectorAll('.callback-btn, .mobile-callback-btn');
+            callbackButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    alert('Форма обратного звонка будет здесь!');
+                });
+            });
+
+            // Scroll animation
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            const fadeInObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            fadeElements.forEach(element => {
+                fadeInObserver.observe(element);
+            });
+            
+            // Form validation
+            const contactForm = document.getElementById('contactForm');
+            const nameInput = document.getElementById('name');
+            const phoneInput = document.getElementById('phone');
+            const emailInput = document.getElementById('email');
+            const messageInput = document.getElementById('message');
+            const submitBtn = document.getElementById('submitBtn');
+            const submitText = document.getElementById('submitText');
+            const submitSpinner = document.getElementById('submitSpinner');
+            const successModal = document.getElementById('successModal');
+            const closeModal = document.getElementById('closeModal');
+            
+            // Real-time validation
+            nameInput.addEventListener('input', validateName);
+            phoneInput.addEventListener('input', validatePhone);
+            emailInput.addEventListener('input', validateEmail);
+            messageInput.addEventListener('input', validateMessage);
+            
+            function validateName() {
+                const errorElement = document.getElementById('nameError');
+                if (nameInput.value.trim() === '') {
+                    nameInput.classList.add('error');
+                    errorElement.classList.remove('hidden');
+                    return false;
+                } else {
+                    nameInput.classList.remove('error');
+                    errorElement.classList.add('hidden');
+                    return true;
+                }
+            }
+            
+            function validatePhone() {
+                const errorElement = document.getElementById('phoneError');
+                const phoneRegex = /^\+?[0-9\s\-\(\)]{7,}$/;
+                if (!phoneRegex.test(phoneInput.value)) {
+                    phoneInput.classList.add('error');
+                    errorElement.classList.remove('hidden');
+                    return false;
+                } else {
+                    phoneInput.classList.remove('error');
+                    errorElement.classList.add('hidden');
+                    return true;
+                }
+            }
+            
+            function validateEmail() {
+                const errorElement = document.getElementById('emailError');
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(emailInput.value)) {
+                    emailInput.classList.add('error');
+                    errorElement.classList.remove('hidden');
+                    return false;
+                } else {
+                    emailInput.classList.remove('error');
+                    errorElement.classList.add('hidden');
+                    return true;
+                }
+            }
+            
+            function validateMessage() {
+                const errorElement = document.getElementById('messageError');
+                if (messageInput.value.trim() === '') {
+                    messageInput.classList.add('error');
+                    errorElement.classList.remove('hidden');
+                    return false;
+                } else {
+                    messageInput.classList.remove('error');
+                    errorElement.classList.add('hidden');
+                    return true;
+                }
+            }
+            
+            // Form submission
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const isNameValid = validateName();
+                const isPhoneValid = validatePhone();
+                const isEmailValid = validateEmail();
+                const isMessageValid = validateMessage();
+                
+                if (isNameValid && isPhoneValid && isEmailValid && isMessageValid) {
+                    // Show loading state
+                    submitText.textContent = 'Отправка...';
+                    submitSpinner.classList.remove('hidden');
+                    submitBtn.disabled = true;
+                    
+                    // Simulate API call
+                    setTimeout(() => {
+                        // Hide loading state
+                        submitText.textContent = 'Отправить';
+                        submitSpinner.classList.add('hidden');
+                        submitBtn.disabled = false;
+                        
+                        // Show success modal
+                        successModal.classList.remove('hidden');
+                        
+                        // Reset form
+                        contactForm.reset();
+                    }, 2000);
+                }
+            });
+            
+            // Close modal
+            closeModal.addEventListener('click', function() {
+                successModal.classList.add('hidden');
+            });
+            
+            // Working hours status
+            function updateStatus() {
+                const now = new Date();
+                const day = now.getDay(); // 0 (Sunday) to 6 (Saturday)
+                const hours = now.getHours();
+                const minutes = now.getMinutes();
+                const statusText = document.getElementById('statusText');
+                const statusDisplay = document.getElementById('statusDisplay');
+                
+                let isOpen = false;
+                
+                // Weekdays (Monday to Saturday)
+                if (day >= 1 && day <= 6) {
+                    if ((hours > 9 || (hours === 9 && minutes >= 0)) && 
+                        (hours < 19 || (hours === 19 && minutes === 0))) {
+                        isOpen = true;
+                    }
+                }
+                
+                if (isOpen) {
+                    statusText.textContent = 'Сейчас открыто';
+                    statusDisplay.classList.add('status-open');
+                    statusDisplay.classList.remove('status-closed');
+                } else {
+                    statusText.textContent = 'Сейчас закрыто';
+                    statusDisplay.classList.add('status-closed');
+                    statusDisplay.classList.remove('status-open');
+                }
+                
+                // Highlight current day in working hours table
+                const rows = document.querySelectorAll('.working-hours tr');
+                rows.forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    cells.forEach(cell => cell.classList.remove('current-day'));
+                });
+                
+                if (day >= 1 && day <= 5) {
+                    // Weekday - highlight first row
+                    const cells = rows[0].querySelectorAll('td');
+                    cells.forEach(cell => cell.classList.add('current-day'));
+                } else if (day === 6) {
+                    // Saturday - highlight first row (same as weekdays)
+                    const cells = rows[0].querySelectorAll('td');
+                    cells.forEach(cell => cell.classList.add('current-day'));
+                } else if (day === 0) {
+                    // Sunday - highlight second row
+                    const cells = rows[1].querySelectorAll('td');
+                    cells.forEach(cell => cell.classList.add('current-day'));
+                }
+            }
+            
+            // Initial status update
+            updateStatus();
+            
+            // Update status every minute
+            setInterval(updateStatus, 60000);
+            
+            // Typing effect for form inputs (optional)
+            const inputs = [nameInput, phoneInput, emailInput, messageInput];
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.classList.add('typing-effect');
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.classList.remove('typing-effect');
+                });
+            });
+        });
+
+        // Общая функция для отправки формы
+        async function submitForm(url, data, successMessage) {
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    alert(successMessage);
+                    return true;
+                } else {
+                    alert(result.error || 'Произошла ошибка при отправке формы');
+                    return false;
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                alert('Произошла ошибка при отправке формы');
+                return false;
+            }
+        }
+
+        // Обработчик для формы ремонта
+        document.querySelectorAll('.repair-form').forEach(form => {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const formData = {
+                    name: form.querySelector('[name="name"]').value,
+                    phone: form.querySelector('[name="phone"]').value,
+                    device: form.querySelector('[name="device"]').value,
+                    problem: form.querySelector('[name="problem"]').value
+                };
+
+                const success = await submitForm(
+                    '/api/repair-request',
+                    formData,
+                    'Ваша заявка на ремонт принята! Мы свяжемся с вами в ближайшее время.'
+                );
+
+                if (success) {
+                    form.reset();
+                }
+            });
+        });
+
+        // Обработчик для формы обратного звонка
+        document.querySelectorAll('.callback-form').forEach(form => {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const formData = {
+                    name: form.querySelector('[name="name"]').value,
+                    phone: form.querySelector('[name="phone"]').value,
+                    preferredTime: form.querySelector('[name="preferredTime"]')?.value
+                };
+
+                const success = await submitForm(
+                    '/api/callback-request',
+                    formData,
+                    'Ваш запрос на обратный звонок принят! Мы свяжемся с вами в указанное время.'
+                );
+
+                if (success) {
+                    form.reset();
+                }
+            });
+        });
+
+        // Обработчик для контактной формы
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const form = e.target;
+            const submitBtn = document.getElementById('submitBtn');
+            const submitText = document.getElementById('submitText');
+            const submitSpinner = document.getElementById('submitSpinner');
+            
+            // Показать спиннер загрузки
+            submitText.textContent = 'Отправка...';
+            submitSpinner.classList.remove('hidden');
+            submitBtn.disabled = true;
+            
+            // Собрать данные формы
+            const formData = {
+                name: form.name.value,
+                email: form.email.value,
+                phone: form.phone.value,
+                message: form.message.value
+            };
+            
+            try {
+                const response = await fetch('http://localhost:5000/api/contact-form', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Показать модальное окно успеха
+                    document.getElementById('successModal').classList.remove('hidden');
+                    
+                    // Очистить форму
+                    form.reset();
+                } else {
+                    alert(result.error || 'Произошла ошибка при отправке формы');
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                alert('Произошла ошибка при отправке формы');
+            } finally {
+                // Восстановить кнопку
+                submitText.textContent = 'Отправить';
+                submitSpinner.classList.add('hidden');
+                submitBtn.disabled = false;
+            }
+        });
+
+        // Обработчик для формы отзыва
+        document.querySelectorAll('.feedback-form').forEach(form => {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const formData = {
+                    name: form.querySelector('[name="name"]').value,
+                    email: form.querySelector('[name="email"]').value,
+                    device: form.querySelector('[name="device"]').value,
+                    rating: form.querySelector('[name="rating"]').value,
+                    message: form.querySelector('[name="message"]').value
+                };
+
+                const success = await submitForm(
+                    '/api/feedback',
+                    formData,
+                    'Спасибо за ваш отзыв! Мы ценим ваше мнение.'
+                );
+
+                if (success) {
+                    form.reset();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
